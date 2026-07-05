@@ -1,0 +1,154 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Awin
+providerId: awin-affiliate
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: true
+tags:
+- Affiliate Marketing
+- Advertising
+- Publishers
+- Advertisers
+- Plans
+description: >-
+  Awin's API carries no separate metered fee; it is an access surface over the
+  account a publisher or advertiser already holds. Pricing lives in Awin's
+  network commercial model. Publishers join generally for free and earn the
+  commission advertisers set (some regions historically applied a small,
+  refundable verification charge at signup). Advertisers pay a monthly platform
+  fee plus a per-transaction tracking fee (network override) across published
+  tiers, in addition to the partner commission they define. API tokens are
+  generated once an account has Admin access.
+notes: >-
+  Advertiser tier prices below are representative values published on the Awin
+  advertiser pricing page and are subject to change; verify current figures on
+  the pricing page during reconciliation. Publisher and advertiser onboarding
+  are commercial relationships, not per-call API charges.
+sources:
+- https://www.awin.com/us/pricing/advertisers
+- https://help.awin.com/apidocs/introduction-1
+- https://help.awin.com/apidocs/api-authentication
+plans:
+- id: awin-publisher
+  name: Publisher
+  type: free
+  description: >-
+    Publishers join the network to earn commissions. Signup is generally free
+    to get started; once approved, a publisher with Admin access can generate an
+    API token to pull transactions, reports, commission groups, and programme
+    details.
+  entries:
+  - label: Network Access
+    name: publisher_access
+    type: free
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free to join
+    userMultiplied: false
+  - label: Commission Earnings
+    name: publisher_commission
+    type: usage
+    metric: commission
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: commission rate set per advertiser programme
+    userMultiplied: false
+  elements:
+  - name: Transactions API
+  - name: Reports API
+  - name: Commission Groups API
+  - name: Programmes API
+  - name: Accounts API
+- id: awin-advertiser-access
+  name: Advertiser - Access
+  type: subscription
+  description: >-
+    Entry advertiser tier. Monthly platform fee plus a per-transaction tracking
+    fee, in addition to the partner commission the advertiser sets.
+  entries:
+  - label: Platform Fee
+    name: access_platform_fee
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $49 per month
+    userMultiplied: false
+  - label: Tracking Fee
+    name: access_tracking_fee
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 3.5% per transaction
+    userMultiplied: false
+  elements:
+  - name: Transactions API
+  - name: Reports API
+  - name: Commission Groups API
+  - name: Publisher Performance API
+- id: awin-advertiser-accelerate
+  name: Advertiser - Accelerate
+  type: subscription
+  description: >-
+    Mid advertiser tier with a lower per-transaction tracking fee.
+  entries:
+  - label: Platform Fee
+    name: accelerate_platform_fee
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: from $99 per month
+    userMultiplied: false
+  - label: Tracking Fee
+    name: accelerate_tracking_fee
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2.5% per transaction
+    userMultiplied: false
+  elements:
+  - name: Transactions API
+  - name: Reports API
+  - name: Commission Groups API
+  - name: Publisher Performance API
+- id: awin-advertiser-advanced
+  name: Advertiser - Advanced
+  type: enterprise
+  description: >-
+    Custom advertiser tier with negotiated platform and tracking pricing and
+    additional services.
+  entries:
+  - label: Advanced Agreement
+    name: advanced
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: custom pricing
+    userMultiplied: false
+  elements:
+  - name: Custom Pricing
+  - name: Full API Access
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

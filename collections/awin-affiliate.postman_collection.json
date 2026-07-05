@@ -1,0 +1,288 @@
+{
+  "info": {
+    "name": "Awin API",
+    "description": "Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. HTTPS only, JSON responses, OAuth 2.0 user-level Bearer token, 20 API calls per minute per user.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.awin.com"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "publisherId",
+      "value": ""
+    },
+    {
+      "key": "advertiserId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Get accounts for the authenticated user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts?accessToken={{accessToken}}&type=publisher",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "type", "value": "publisher" }
+              ]
+            },
+            "description": "Return the list of publisher and advertiser accounts the user can access."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Get list of transactions for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/transactions/?accessToken={{accessToken}}&startDate=2026-06-01T00:00:00&endDate=2026-06-30T23:59:59&timezone=UTC&dateType=transaction",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "transactions", ""],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01T00:00:00" },
+                { "key": "endDate", "value": "2026-06-30T23:59:59" },
+                { "key": "timezone", "value": "UTC" },
+                { "key": "dateType", "value": "transaction" }
+              ]
+            },
+            "description": "Pull individual publisher transactions over a range of up to 31 days."
+          }
+        },
+        {
+          "name": "Get list of transactions for an advertiser",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/advertisers/{{advertiserId}}/transactions/?accessToken={{accessToken}}&startDate=2026-06-01T00:00:00&endDate=2026-06-30T23:59:59&timezone=UTC&dateType=transaction",
+              "host": ["{{baseUrl}}"],
+              "path": ["advertisers", "{{advertiserId}}", "transactions", ""],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01T00:00:00" },
+                { "key": "endDate", "value": "2026-06-30T23:59:59" },
+                { "key": "timezone", "value": "UTC" },
+                { "key": "dateType", "value": "transaction" }
+              ]
+            },
+            "description": "Pull individual advertiser transactions over a range of up to 31 days."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Advertiser performance report for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/reports/advertiser?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "reports", "advertiser"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "region", "value": "GB" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated performance for a publisher, broken down by advertiser."
+          }
+        },
+        {
+          "name": "Creative performance report for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/reports/creative?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "reports", "creative"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "region", "value": "GB" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated transactions, clicks, and impressions by creative for a publisher."
+          }
+        },
+        {
+          "name": "Campaign performance report for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/reports/campaign?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "reports", "campaign"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated clicks and transactions by campaign and advertiser for a publisher."
+          }
+        },
+        {
+          "name": "Publisher performance report for an advertiser",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/advertisers/{{advertiserId}}/reports/publisher?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["advertisers", "{{advertiserId}}", "reports", "publisher"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated performance for an advertiser, broken down by publisher."
+          }
+        },
+        {
+          "name": "Creative performance report for an advertiser",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/advertisers/{{advertiserId}}/reports/creative?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["advertisers", "{{advertiserId}}", "reports", "creative"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "region", "value": "GB" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated transactions, clicks, and impressions by creative for an advertiser."
+          }
+        },
+        {
+          "name": "Campaign performance report for an advertiser",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/advertisers/{{advertiserId}}/reports/campaign?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["advertisers", "{{advertiserId}}", "reports", "campaign"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "startDate", "value": "2026-06-01" },
+                { "key": "endDate", "value": "2026-06-30" },
+                { "key": "timezone", "value": "UTC" }
+              ]
+            },
+            "description": "Aggregated clicks and transactions by campaign and publisher for an advertiser."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commission Groups",
+      "item": [
+        {
+          "name": "Get commission groups for an advertiser programme",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/commissiongroups?accessToken={{accessToken}}&advertiserId={{advertiserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "commissiongroups"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "advertiserId", "value": "{{advertiserId}}" }
+              ]
+            },
+            "description": "Return all commission groups of a programme and the values a publisher earns."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Programmes",
+      "item": [
+        {
+          "name": "Get programmes for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/programmes?accessToken={{accessToken}}&relationship=joined",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "programmes"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "relationship", "value": "joined" }
+              ]
+            },
+            "description": "List advertiser programmes a publisher has a relationship with."
+          }
+        },
+        {
+          "name": "Get programme details for a publisher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/publishers/{{publisherId}}/programmedetails?accessToken={{accessToken}}&advertiserId={{advertiserId}}&relationship=joined",
+              "host": ["{{baseUrl}}"],
+              "path": ["publishers", "{{publisherId}}", "programmedetails"],
+              "query": [
+                { "key": "accessToken", "value": "{{accessToken}}" },
+                { "key": "advertiserId", "value": "{{advertiserId}}" },
+                { "key": "relationship", "value": "joined" }
+              ]
+            },
+            "description": "Return detail for a single programme including KPIs and commission range."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Awin
+providerId: awin-affiliate
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: true
+tags:
+- Affiliate Marketing
+- Advertising
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Awin spend. Awin's API itself is not metered; cost sits in the
+  affiliate network's commercial model. For advertisers, spend is a monthly
+  platform fee plus a per-transaction tracking fee (network override) and the
+  partner commission paid to publishers per validated sale or lead. For
+  publishers, the relationship is revenue, not cost - commissions earned per
+  transaction. The API is the reporting and reconciliation surface over that
+  spend and revenue.
+notes: >-
+  Advertiser tier and tracking-fee figures are representative values from the
+  Awin advertiser pricing page and change over time; verify during
+  reconciliation. There is no separate per-API-call charge.
+sources:
+- https://www.awin.com/us/pricing/advertisers
+- https://help.awin.com/apidocs/introduction-1
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Awin
+serviceCategory: Marketing and Advertising
+billingModel:
+  pricingCategory: Subscription plus Usage
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Awin Affiliate Network
+  ServiceCategory: Marketing and Advertising
+  ProviderName: Awin
+  PublisherName: Awin
+  InvoiceIssuerName: Awin
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription plus Usage
+meters:
+- name: advertiser_platform_fee
+  description: Monthly advertiser platform subscription fee by tier (Access, Accelerate, Advanced).
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: tracking_fee
+  description: Per-transaction network override / tracking fee charged to advertisers.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+  - tier
+- name: partner_commission
+  description: Commission paid by advertisers to publishers per validated transaction.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - advertiser
+  - publisher
+  - commissionGroup
+- name: commission_adjustments
+  description: Amendments and declines that adjust previously reported commission.
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+  - status
+principles:
+- name: Visibility
+  description: >-
+    Pull the transactions and aggregated reports APIs to see clicks, sales,
+    commission, and tracking fees by advertiser, publisher, creative, and
+    campaign in near real time.
+- name: Allocation
+  description: >-
+    Attribute commission and tracking-fee spend to programmes, commission
+    groups, and campaigns using the report dimensions and clickRef/orderRef
+    custom parameters.
+- name: Optimization
+  description: >-
+    Compare commission-group rates and per-programme KPIs (EPC, conversion rate,
+    approval percentage) to shift budget toward efficient partners and validate
+    transactions promptly to control declined/pending exposure.
+- name: Accountability
+  description: >-
+    Reconcile validated versus pending versus declined transactions monthly
+    against budget, and monitor tracking-fee tier thresholds.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

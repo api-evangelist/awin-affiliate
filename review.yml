@@ -1,0 +1,110 @@
+aid: awin-affiliate
+name: Awin
+review:
+  question: Does Awin expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-05'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Awin's documented public API surface is
+    request/response REST over HTTPS at https://api.awin.com. There is no
+    server-push transport (WebSocket or SSE) on Awin's own API to model. Awin
+    does offer a "Receive transaction notifications" webhook-style mechanism and
+    a Conversion API for inbound server-to-server tracking, but those are HTTP
+    request/response, not a persistent bidirectional socket, and carry no
+    documented ws:// or wss:// endpoint.
+findings:
+  summary: |
+    Awin does not publish a documented public WebSocket API. Awin is a global
+    affiliate marketing network. Its public API (base https://api.awin.com) is
+    pure request/response REST over HTTPS, returns JSON, and authenticates with
+    an OAuth 2.0 Bearer access token issued at the user level from the Awin UI
+    (the Create Transactions API is the exception and uses an x-api-key header).
+    Publishers and advertisers use it to pull transactions and aggregated
+    performance reports, read commission groups and programme details, list the
+    accounts a user can access, and generate tracking links and offers. A
+    platform throttle limits usage to 20 API calls per minute per user. No
+    realtime, bidirectional, or streaming WebSocket (ws:// or wss://) endpoint is
+    documented anywhere in Awin's API reference as of the review date.
+  openSource: |
+    Awin's platform and API are proprietary and not open source. The API is
+    publicly documented at help.awin.com/apidocs but requires an Awin publisher
+    or advertiser account plus a user-level access token to call; it is not
+    anonymously open.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.awin.com
+      documented: true
+      note: All publisher and advertiser endpoints (accounts, transactions, reports, commission groups, programmes, link builder, offers). HTTPS only, JSON responses.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: The Receive transaction notifications mechanism and the Conversion API accept or deliver events over HTTP request/response, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Awin's API reference as of the review date.
+  authentication:
+    - type: OAuth2 Bearer Token
+      note: User-level access token generated at ui.awin.com/awin-api, sent as Authorization Bearer. Grants access to all accounts the user is associated with.
+    - type: API Key
+      note: Create Transactions API only, sent as x-api-key header.
+  rateLimits:
+    - scope: user
+      limit: 20 requests per minute
+      note: Platform-wide throttle across the API.
+  endpointsConfirmedRest:
+    - GET https://api.awin.com/accounts
+    - GET https://api.awin.com/publishers/{publisherId}/transactions/
+    - GET https://api.awin.com/advertisers/{advertiserId}/transactions/
+    - GET https://api.awin.com/publishers/{publisherId}/reports/advertiser
+    - GET https://api.awin.com/publishers/{publisherId}/reports/creative
+    - GET https://api.awin.com/publishers/{publisherId}/reports/campaign
+    - GET https://api.awin.com/advertisers/{advertiserId}/reports/publisher
+    - GET https://api.awin.com/advertisers/{advertiserId}/reports/creative
+    - GET https://api.awin.com/advertisers/{advertiserId}/reports/campaign
+    - GET https://api.awin.com/publishers/{publisherId}/commissiongroups
+    - GET https://api.awin.com/publishers/{publisherId}/programmes
+    - GET https://api.awin.com/publishers/{publisherId}/programmedetails
+sources:
+  - url: https://help.awin.com/apidocs/introduction-1
+    type: Documentation
+    note: API overview, base URL https://api.awin.com, HTTPS only, JSON, 20 calls/min throttle.
+  - url: https://help.awin.com/apidocs/api-authentication
+    type: Documentation
+    note: OAuth 2.0 Bearer token, user-level tokens, x-api-key exception for Create Transactions.
+  - url: https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
+    type: APIReference
+    note: GET /publishers/{publisherId}/transactions/ with date range up to 31 days.
+  - url: https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-advertiser
+    type: APIReference
+    note: GET /advertisers/{advertiserId}/transactions/.
+  - url: https://help.awin.com/apidocs/get-advertiser-performance-report
+    type: APIReference
+    note: GET /publishers/{publisherId}/reports/advertiser aggregated report.
+  - url: https://help.awin.com/apidocs/get-publisher-performance-report
+    type: APIReference
+    note: GET /advertisers/{advertiserId}/reports/publisher aggregated report.
+  - url: https://help.awin.com/apidocs/get-publisher-creative-performance-report
+    type: APIReference
+    note: GET /publishers/{publisherId}/reports/creative aggregated report.
+  - url: https://help.awin.com/apidocs/gets-an-array-of-commission-groups-for-an-advertiser
+    type: APIReference
+    note: GET /publishers/{publisherId}/commissiongroups.
+  - url: https://help.awin.com/apidocs/get-program-information-details-for-publisher
+    type: APIReference
+    note: GET /publishers/{publisherId}/programmedetails with KPIs and commission range.
+  - url: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
+    type: APIReference
+    note: GET /accounts enumerates user's publisher/advertiser accounts.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Awin's documented public API is
+    request/response REST over HTTPS with an OAuth 2.0 Bearer token, plus
+    webhook-style transaction notifications and a Conversion API that are also
+    HTTP request/response. No AsyncAPI document was created because there is no
+    server-push transport on Awin's own API to model.

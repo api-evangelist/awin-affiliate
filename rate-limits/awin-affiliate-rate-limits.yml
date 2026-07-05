@@ -1,0 +1,54 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Awin
+providerId: awin-affiliate
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: true
+tags:
+- Affiliate Marketing
+- Advertising
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Awin operates a single platform-wide throttle across its API. The documented
+  limit is 20 API calls per minute per user; because tokens are set at the user
+  level, the limit is shared across every publisher and advertiser account the
+  token can reach. Some endpoints impose their own request-scoping constraints
+  rather than a separate rate limit - for example, the transactions endpoints
+  cap each request to a date range of at most 31 days.
+notes: >-
+  The 20 calls-per-minute figure is documented in the Awin API introduction.
+  Confirm the current value on the introduction page during reconciliation.
+sources:
+- https://help.awin.com/apidocs/introduction-1
+- https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests Per Minute
+  scope: user
+  metric: requests
+  limit: 20
+  window: 60s
+  notes: Platform-wide throttle shared across all accounts the user token can access.
+- name: Transaction Date Range
+  scope: request
+  metric: days
+  limit: 31
+  notes: Maximum span between startDate and endDate on the transaction list endpoints.
+policies:
+- name: User-Level Scope
+  description: >-
+    Rate limiting is applied per user, not per account. A token that reaches
+    many accounts still shares one 20-call-per-minute budget.
+- name: Backoff Strategy
+  description: >-
+    Clients should throttle to stay under 20 calls/min, implement exponential
+    backoff with jitter on 429 responses, and batch date ranges in chunks of up
+    to 31 days for transaction pulls.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

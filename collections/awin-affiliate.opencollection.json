@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get accounts for the authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/accounts?accessToken={{accessToken}}&type=publisher"
+          },
+          "docs": "Return the list of publisher and advertiser accounts the user can access."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of transactions for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/transactions/?accessToken={{accessToken}}&startDate=2026-06-01T00:00:00&endDate=2026-06-30T23:59:59&timezone=UTC&dateType=transaction"
+          },
+          "docs": "Pull individual publisher transactions over a range of up to 31 days."
+        },
+        {
+          "info": {
+            "name": "Get list of transactions for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/{{advertiserId}}/transactions/?accessToken={{accessToken}}&startDate=2026-06-01T00:00:00&endDate=2026-06-30T23:59:59&timezone=UTC&dateType=transaction"
+          },
+          "docs": "Pull individual advertiser transactions over a range of up to 31 days."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Advertiser performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/reports/advertiser?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC"
+          },
+          "docs": "Aggregated performance for a publisher, broken down by advertiser."
+        },
+        {
+          "info": {
+            "name": "Creative performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/reports/creative?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC"
+          },
+          "docs": "Aggregated transactions, clicks, and impressions by creative for a publisher."
+        },
+        {
+          "info": {
+            "name": "Campaign performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/reports/campaign?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC"
+          },
+          "docs": "Aggregated clicks and transactions by campaign and advertiser for a publisher."
+        },
+        {
+          "info": {
+            "name": "Publisher performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/{{advertiserId}}/reports/publisher?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC"
+          },
+          "docs": "Aggregated performance for an advertiser, broken down by publisher."
+        },
+        {
+          "info": {
+            "name": "Creative performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/{{advertiserId}}/reports/creative?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&region=GB&timezone=UTC"
+          },
+          "docs": "Aggregated transactions, clicks, and impressions by creative for an advertiser."
+        },
+        {
+          "info": {
+            "name": "Campaign performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/{{advertiserId}}/reports/campaign?accessToken={{accessToken}}&startDate=2026-06-01&endDate=2026-06-30&timezone=UTC"
+          },
+          "docs": "Aggregated clicks and transactions by campaign and publisher for an advertiser."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commission Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get commission groups for an advertiser programme",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/commissiongroups?accessToken={{accessToken}}&advertiserId={{advertiserId}}"
+          },
+          "docs": "Return all commission groups of a programme and the values a publisher earns."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Programmes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get programmes for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/programmes?accessToken={{accessToken}}&relationship=joined"
+          },
+          "docs": "List advertiser programmes a publisher has a relationship with."
+        },
+        {
+          "info": {
+            "name": "Get programme details for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/{{publisherId}}/programmedetails?accessToken={{accessToken}}&advertiserId={{advertiserId}}&relationship=joined"
+          },
+          "docs": "Return detail for a single programme including KPIs and commission range."
+        }
+      ]
+    }
+  ]
+}
