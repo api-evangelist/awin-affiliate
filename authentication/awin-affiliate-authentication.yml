@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/awin-affiliate-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent
+    as an Authorization Bearer header. The Create Transactions API is the exception and uses
+    an x-api-key header instead. Many endpoints also accept the token as an accessToken query
+    parameter.
+  sources:
+  - openapi/awin-affiliate-openapi.yml

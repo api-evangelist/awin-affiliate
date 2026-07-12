@@ -154,6 +154,12 @@ apis:
     conversion rate, approval percentage, average payment time, Awin index) and the
     commission range across commission groups.
 common:
+- type: VulnerabilityDisclosure
+  url: security/awin-affiliate-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/awin-affiliate-domain-security.yml
+- type: Authentication
+  url: authentication/awin-affiliate-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/awin
 - type: Website
