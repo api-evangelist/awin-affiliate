@@ -154,6 +154,8 @@ apis:
     conversion rate, approval percentage, average payment time, Awin index) and the
     commission range across commission groups.
 common:
+- type: AgenticAccess
+  url: agentic-access/awin-affiliate-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/awin-affiliate-vulnerability-disclosure.yml
 - type: DomainSecurity
