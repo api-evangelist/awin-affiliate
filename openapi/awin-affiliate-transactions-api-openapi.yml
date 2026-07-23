@@ -1,0 +1,241 @@
+openapi: 3.0.1
+info:
+  title: Awin Accounts Transactions API
+  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  termsOfService: https://www.awin.com/gb/legal
+  contact:
+    name: Awin API Support
+    url: https://help.awin.com/apidocs/introduction-1
+  version: '1.0'
+servers:
+- url: https://api.awin.com
+  description: Awin API (HTTPS only)
+security:
+- bearerAuth: []
+tags:
+- name: Transactions
+  description: Individual publisher and advertiser transactions.
+paths:
+  /publishers/{publisherId}/transactions/:
+    get:
+      operationId: getPublisherTransactions
+      tags:
+      - Transactions
+      summary: Get list of transactions for a publisher
+      description: Pull individual transactions for a publisher over a date range of up to 31 days. Times use the yyyy-MM-ddThh:mm:ss format in the given timezone.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDateTime'
+      - $ref: '#/components/parameters/endDateTime'
+      - $ref: '#/components/parameters/timezone'
+      - $ref: '#/components/parameters/dateTypeTx'
+      - $ref: '#/components/parameters/statusTx'
+      - $ref: '#/components/parameters/showBasketProducts'
+      - name: advertiserId
+        in: query
+        required: false
+        description: Single advertiser ID or comma-separated list.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  /advertisers/{advertiserId}/transactions/:
+    get:
+      operationId: getAdvertiserTransactions
+      tags:
+      - Transactions
+      summary: Get list of transactions for an advertiser
+      description: Pull individual transactions for an advertiser over a date range of up to 31 days.
+      parameters:
+      - $ref: '#/components/parameters/advertiserId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDateTime'
+      - $ref: '#/components/parameters/endDateTime'
+      - $ref: '#/components/parameters/timezone'
+      - $ref: '#/components/parameters/dateTypeTx'
+      - $ref: '#/components/parameters/statusTx'
+      - $ref: '#/components/parameters/showBasketProducts'
+      - name: publisherId
+        in: query
+        required: false
+        description: Single publisher ID or comma-separated list.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+components:
+  parameters:
+    startDateTime:
+      name: startDate
+      in: query
+      required: true
+      description: Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
+    statusTx:
+      name: status
+      in: query
+      required: false
+      description: Filter transactions by status.
+      schema:
+        type: string
+        enum:
+        - pending
+        - approved
+        - declined
+        - deleted
+    dateTypeTx:
+      name: dateType
+      in: query
+      required: false
+      description: Which date to filter transactions on.
+      schema:
+        type: string
+        enum:
+        - transaction
+        - validation
+        - amendment
+        default: transaction
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    showBasketProducts:
+      name: showBasketProducts
+      in: query
+      required: false
+      description: Include basket products when product-level tracking is enabled.
+      schema:
+        type: boolean
+        default: false
+    endDateTime:
+      name: endDate
+      in: query
+      required: true
+      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
+    timezone:
+      name: timezone
+      in: query
+      required: true
+      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
+      schema:
+        type: string
+  schemas:
+    Money:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        advertiserId:
+          type: integer
+        publisherId:
+          type: integer
+        commissionSharingPublisherId:
+          type: integer
+        siteName:
+          type: string
+        commissionStatus:
+          type: string
+          enum:
+          - pending
+          - approved
+          - declined
+          - deleted
+        commissionAmount:
+          $ref: '#/components/schemas/Money'
+        saleAmount:
+          $ref: '#/components/schemas/Money'
+        ipHash:
+          type: string
+        customerCountry:
+          type: string
+        clickRefs:
+          type: object
+          description: clickRef and clickRef2 through clickRef6.
+        clickDate:
+          type: string
+          format: date-time
+        transactionDate:
+          type: string
+          format: date-time
+        validationDate:
+          type: string
+          format: date-time
+        type:
+          type: string
+          description: Transaction type, e.g. Sale, Lead, Bonus, Mobile App Install.
+        declineReason:
+          type: string
+        voucherCodeUsed:
+          type: boolean
+        voucherCode:
+          type: string
+        lapseTime:
+          type: integer
+          description: Conversion time in seconds.
+        amended:
+          type: boolean
+        orderRef:
+          type: string
+        customParameters:
+          type: array
+          items:
+            type: object
+        transactionParts:
+          type: array
+          items:
+            type: object
+        paidToPublisher:
+          type: boolean
+        basketProducts:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent as an Authorization Bearer header. The Create Transactions API is the exception and uses an x-api-key header instead. Many endpoints also accept the token as an accessToken query parameter.

@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: Awin Accounts API
+  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  termsOfService: https://www.awin.com/gb/legal
+  contact:
+    name: Awin API Support
+    url: https://help.awin.com/apidocs/introduction-1
+  version: '1.0'
+servers:
+- url: https://api.awin.com
+  description: Awin API (HTTPS only)
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+  description: Accounts the authenticated user can access.
+paths:
+  /accounts:
+    get:
+      operationId: getAccounts
+      tags:
+      - Accounts
+      summary: Get accounts for the authenticated user
+      description: Return the list of accounts associated with the user. Because tokens are user-level, this enumerates every publisher and advertiser account the user can access.
+      parameters:
+      - $ref: '#/components/parameters/accessToken'
+      - name: type
+        in: query
+        required: false
+        description: Filter by account type.
+        schema:
+          type: string
+          enum:
+          - publisher
+          - advertiser
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: integer
+          description: Account ID as known from the frontend URLs.
+        accountName:
+          type: string
+          description: Programme name for advertisers, company name for publishers.
+        accountType:
+          type: string
+          enum:
+          - publisher
+          - advertiser
+        userRole:
+          type: string
+          description: The permission level assigned to the user for this account.
+  parameters:
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent as an Authorization Bearer header. The Create Transactions API is the exception and uses an x-api-key header instead. Many endpoints also accept the token as an accessToken query parameter.

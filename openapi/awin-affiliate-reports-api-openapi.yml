@@ -1,0 +1,287 @@
+openapi: 3.0.1
+info:
+  title: Awin Accounts Reports API
+  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  termsOfService: https://www.awin.com/gb/legal
+  contact:
+    name: Awin API Support
+    url: https://help.awin.com/apidocs/introduction-1
+  version: '1.0'
+servers:
+- url: https://api.awin.com
+  description: Awin API (HTTPS only)
+security:
+- bearerAuth: []
+tags:
+- name: Reports
+  description: Aggregated performance reports.
+paths:
+  /publishers/{publisherId}/reports/advertiser:
+    get:
+      operationId: getPublisherAdvertiserReport
+      tags:
+      - Reports
+      summary: Advertiser performance report for a publisher
+      description: Aggregated performance for a publisher, broken down by advertiser.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/timezoneOptional'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+  /publishers/{publisherId}/reports/creative:
+    get:
+      operationId: getPublisherCreativeReport
+      tags:
+      - Reports
+      summary: Creative performance report for a publisher
+      description: Aggregated transactions, clicks, and impressions by creative for a publisher.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/timezoneOptional'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+  /publishers/{publisherId}/reports/campaign:
+    get:
+      operationId: getPublisherCampaignReport
+      tags:
+      - Reports
+      summary: Campaign performance report for a publisher
+      description: Aggregated clicks and transactions by campaign and advertiser for a publisher, listable in day, month, or year intervals.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/timezoneOptional'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+  /advertisers/{advertiserId}/reports/publisher:
+    get:
+      operationId: getAdvertiserPublisherReport
+      tags:
+      - Reports
+      summary: Publisher performance report for an advertiser
+      description: Aggregated performance for an advertiser, broken down by publisher.
+      parameters:
+      - $ref: '#/components/parameters/advertiserId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/timezone'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+  /advertisers/{advertiserId}/reports/creative:
+    get:
+      operationId: getAdvertiserCreativeReport
+      tags:
+      - Reports
+      summary: Creative performance report for an advertiser
+      description: Aggregated transactions, clicks, and impressions by creative for an advertiser.
+      parameters:
+      - $ref: '#/components/parameters/advertiserId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/region'
+      - $ref: '#/components/parameters/timezoneOptional'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+  /advertisers/{advertiserId}/reports/campaign:
+    get:
+      operationId: getAdvertiserCampaignReport
+      tags:
+      - Reports
+      summary: Campaign performance report for an advertiser
+      description: Aggregated clicks and transactions by campaign and publisher for an advertiser, listable in day, month, or year intervals.
+      parameters:
+      - $ref: '#/components/parameters/advertiserId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/startDate'
+      - $ref: '#/components/parameters/endDate'
+      - $ref: '#/components/parameters/timezoneOptional'
+      - $ref: '#/components/parameters/dateTypeReport'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PerformanceRow'
+components:
+  parameters:
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
+    timezoneOptional:
+      name: timezone
+      in: query
+      required: false
+      description: Timezone identifier, defaults to UTC.
+      schema:
+        type: string
+        default: UTC
+    startDate:
+      name: startDate
+      in: query
+      required: true
+      description: Start date, format yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
+    dateTypeReport:
+      name: dateType
+      in: query
+      required: false
+      description: Which date to aggregate the report on.
+      schema:
+        type: string
+        enum:
+        - transaction
+        - validation
+        default: transaction
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    region:
+      name: region
+      in: query
+      required: true
+      description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
+      schema:
+        type: string
+    endDate:
+      name: endDate
+      in: query
+      required: true
+      description: End date, format yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    timezone:
+      name: timezone
+      in: query
+      required: true
+      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
+      schema:
+        type: string
+  schemas:
+    PerformanceRow:
+      type: object
+      description: One aggregated performance row for a report dimension.
+      properties:
+        advertiserId:
+          type: integer
+        advertiserName:
+          type: string
+        publisherId:
+          type: integer
+        publisherName:
+          type: string
+        region:
+          type: string
+        currency:
+          type: string
+        impressions:
+          type: integer
+        clicks:
+          type: integer
+        pendingNo:
+          type: integer
+        pendingValue:
+          type: number
+        pendingComm:
+          type: number
+        confirmedNo:
+          type: integer
+        confirmedValue:
+          type: number
+        confirmedComm:
+          type: number
+        bonusNo:
+          type: integer
+        bonusValue:
+          type: number
+        bonusComm:
+          type: number
+        declinedNo:
+          type: integer
+        declinedValue:
+          type: number
+        declinedComm:
+          type: number
+        totalNo:
+          type: integer
+        totalValue:
+          type: number
+        totalComm:
+          type: number
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent as an Authorization Bearer header. The Create Transactions API is the exception and uses an x-api-key header instead. Many endpoints also accept the token as an accessToken query parameter.

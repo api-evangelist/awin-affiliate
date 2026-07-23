@@ -1,0 +1,164 @@
+openapi: 3.0.1
+info:
+  title: Awin Accounts Programmes API
+  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  termsOfService: https://www.awin.com/gb/legal
+  contact:
+    name: Awin API Support
+    url: https://help.awin.com/apidocs/introduction-1
+  version: '1.0'
+servers:
+- url: https://api.awin.com
+  description: Awin API (HTTPS only)
+security:
+- bearerAuth: []
+tags:
+- name: Programmes
+  description: Advertiser programmes and their details.
+paths:
+  /publishers/{publisherId}/programmes:
+    get:
+      operationId: getProgrammes
+      tags:
+      - Programmes
+      summary: Get programmes for a publisher
+      description: List the advertiser programmes a publisher has a relationship with, filtered by relationship and optionally by country.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - $ref: '#/components/parameters/relationship'
+      - name: countryCode
+        in: query
+        required: false
+        description: Two-letter country code to filter programmes.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProgrammeInfo'
+  /publishers/{publisherId}/programmedetails:
+    get:
+      operationId: getProgrammeDetails
+      tags:
+      - Programmes
+      summary: Get programme details for a publisher
+      description: Return detail for a single advertiser programme including description, membership status, valid domains, KPIs, and the commission range across commission groups.
+      parameters:
+      - $ref: '#/components/parameters/publisherId'
+      - $ref: '#/components/parameters/accessToken'
+      - name: advertiserId
+        in: query
+        required: true
+        description: The advertiser identifier.
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/relationship'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgrammeDetails'
+components:
+  parameters:
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    relationship:
+      name: relationship
+      in: query
+      required: false
+      description: Filter by the publisher's relationship to the programme.
+      schema:
+        type: string
+        enum:
+        - joined
+        - pending
+        - suspended
+        - rejected
+        - notjoined
+        - any
+        default: joined
+  schemas:
+    ProgrammeInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        displayUrl:
+          type: string
+        clickThroughUrl:
+          type: string
+        deeplinkEnabled:
+          type: boolean
+        membershipStatus:
+          type: string
+        logoUrl:
+          type: string
+        currencyCode:
+          type: string
+        primaryRegion:
+          type: object
+        validDomains:
+          type: array
+          items:
+            type: string
+    ProgrammeDetails:
+      type: object
+      properties:
+        programmeInfo:
+          $ref: '#/components/schemas/ProgrammeInfo'
+        kpi:
+          type: object
+          properties:
+            averagePaymentTime:
+              type: number
+            approvalPercentage:
+              type: number
+            epc:
+              type: number
+            conversionRate:
+              type: number
+            validationDays:
+              type: integer
+            awinIndex:
+              type: number
+        commissionRange:
+          type: array
+          items:
+            type: object
+            properties:
+              min:
+                type: number
+                description: Minimal commission across commission groups.
+              max:
+                type: number
+                description: Maximum commission across commission groups.
+              type:
+                type: string
+                description: percentage or amount (amount in programme currency).
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent as an Authorization Bearer header. The Create Transactions API is the exception and uses an x-api-key header instead. Many endpoints also accept the token as an accessToken query parameter.
