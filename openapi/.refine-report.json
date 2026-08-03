@@ -1,0 +1,22 @@
+{
+  "provider": "awin-affiliate",
+  "sources": [
+    "awin-affiliate-accounts-api-openapi.yml",
+    "awin-affiliate-commission-groups-api-openapi.yml",
+    "awin-affiliate-programmes-api-openapi.yml",
+    "awin-affiliate-reports-api-openapi.yml",
+    "awin-affiliate-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "awin-affiliate-accounts-api-openapi.yml",
+    "awin-affiliate-commission-groups-api-openapi.yml",
+    "awin-affiliate-programmes-api-openapi.yml",
+    "awin-affiliate-reports-api-openapi.yml",
+    "awin-affiliate-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
