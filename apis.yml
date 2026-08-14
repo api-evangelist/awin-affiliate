@@ -37,7 +37,7 @@ tags:
 - Commissions
 - Performance Marketing
 created: '2026-07-05'
-modified: '2026-07-05'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: awin-affiliate:awin-affiliate-accounts-api
@@ -50,6 +50,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/awin-affiliate-accounts-api-openapi.yml
+  - type: Overlay
+    url: overlays/awin-affiliate-accounts-api-overlay.yaml
   - type: Documentation
     url: https://help.awin.com/apidocs/introduction-1
   - type: APIReference
@@ -76,13 +78,15 @@ apis:
 - aid: awin-affiliate:awin-affiliate-commission-groups-api
   name: Awin Commission Groups API
   description: Commission groups and rates for a programme.
-  humanURL: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
+  humanURL: https://help.awin.com/apidocs/gets-an-array-of-commission-groups-for-an-advertiser
   baseURL: https://api.awin.com
   tags:
   - Commission Groups
   properties:
   - type: OpenAPI
     url: openapi/awin-affiliate-commission-groups-api-openapi.yml
+  - type: Overlay
+    url: overlays/awin-affiliate-commission-groups-api-overlay.yaml
   - type: Documentation
     url: https://help.awin.com/apidocs/introduction-1
   - type: APIReference
@@ -109,13 +113,15 @@ apis:
 - aid: awin-affiliate:awin-affiliate-programmes-api
   name: Awin Programmes API
   description: Advertiser programmes and their details.
-  humanURL: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
+  humanURL: https://help.awin.com/apidocs/get-program-information-details-for-publisher
   baseURL: https://api.awin.com
   tags:
   - Programmes
   properties:
   - type: OpenAPI
     url: openapi/awin-affiliate-programmes-api-openapi.yml
+  - type: Overlay
+    url: overlays/awin-affiliate-programmes-api-overlay.yaml
   - type: Documentation
     url: https://help.awin.com/apidocs/introduction-1
   - type: APIReference
@@ -142,13 +148,15 @@ apis:
 - aid: awin-affiliate:awin-affiliate-reports-api
   name: Awin Reports API
   description: Aggregated performance reports.
-  humanURL: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
+  humanURL: https://help.awin.com/apidocs/get-advertiser-performance-report
   baseURL: https://api.awin.com
   tags:
   - Reports
   properties:
   - type: OpenAPI
     url: openapi/awin-affiliate-reports-api-openapi.yml
+  - type: Overlay
+    url: overlays/awin-affiliate-reports-api-overlay.yaml
   - type: Documentation
     url: https://help.awin.com/apidocs/introduction-1
   - type: APIReference
@@ -175,13 +183,15 @@ apis:
 - aid: awin-affiliate:awin-affiliate-transactions-api
   name: Awin Transactions API
   description: Individual publisher and advertiser transactions.
-  humanURL: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
+  humanURL: https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
   baseURL: https://api.awin.com
   tags:
   - Transactions
   properties:
   - type: OpenAPI
     url: openapi/awin-affiliate-transactions-api-openapi.yml
+  - type: Overlay
+    url: overlays/awin-affiliate-transactions-api-overlay.yaml
   - type: Documentation
     url: https://help.awin.com/apidocs/introduction-1
   - type: APIReference
@@ -228,6 +238,75 @@ common:
   url: rate-limits/awin-affiliate-rate-limits.yml
 - type: FinOps
   url: finops/awin-affiliate-finops.yml
+- type: Packages
+  url: packages/awin-affiliate-packages.yml
+- type: WellKnown
+  url: well-known/awin-affiliate-well-known.yml
+- type: SecurityTxt
+  url: well-known/awin-affiliate-security.txt
+- type: Security
+  url: https://www.awin.com/.well-known/security.txt
+- type: TrustCenter
+  url: security/awin-affiliate-trust-center.yml
+- type: Compliance
+  url: https://www.awin.com/gb/legal/information-security
+- type: Conformance
+  url: conformance/awin-affiliate-conformance.yml
+- type: LLMsTxt
+  url: llms/awin-affiliate-llms.txt
+- type: MCP
+  url: mcp/awin-affiliate-mcp.yml
+- type: ErrorCatalog
+  url: errors/awin-affiliate-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/awin-affiliate-lifecycle.yml
+- type: StatusPage
+  url: https://status.awin.com
+- type: Conventions
+  url: conventions/awin-affiliate-conventions.yml
+- type: ChangeLog
+  url: changelog/awin-affiliate-changelog.yml
+- type: ChangeLog
+  url: https://www.awin.com/gb/product-releases
+- type: DataModel
+  url: data-model/awin-affiliate-data-model.yml
+- type: Webhooks
+  url: asyncapi/awin-affiliate-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Console
+  url: https://help.awin.com/apidocs/introduction-1
+- type: Postman
+  url: collections/awin-affiliate.postman_collection.json
+- type: DeveloperPortal
+  url: https://developer.awin.com
+- type: APIReference
+  url: https://help.awin.com/apidocs
+- type: GettingStarted
+  url: https://help.awin.com/apidocs/getting-started-1
+- type: Support
+  url: https://success.awin.com/s/contactsupport
+- type: HelpCenter
+  url: https://help.awin.com
+- type: Blog
+  url: https://www.awin.com/gb/market-insights
+- type: GitHubOrganization
+  url: https://github.com/awin
+- type: Pricing
+  url: https://www.awin.com/gb/pricing/advertisers
+- type: SignUp
+  url: https://www.awin.com/gb/getting-started
+- type: Login
+  url: https://ui.awin.com/idp/en/awin/login
+- type: TermsOfService
+  url: https://www.awin.com/gb/publisher-terms
+- type: PrivacyPolicy
+  url: https://www.awin.com/gb/privacy
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1
