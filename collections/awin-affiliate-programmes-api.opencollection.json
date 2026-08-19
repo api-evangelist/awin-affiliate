@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin Accounts Programmes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Programmes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get programmes for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/programmes",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "relationship",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the publisher's relationship to the programme."
+              },
+              {
+                "name": "countryCode",
+                "value": "",
+                "type": "query",
+                "description": "Two-letter country code to filter programmes."
+              }
+            ]
+          },
+          "docs": "List the advertiser programmes a publisher has a relationship with, filtered by relationship and optionally by country."
+        },
+        {
+          "info": {
+            "name": "Get programme details for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/programmedetails",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "query",
+                "description": "The advertiser identifier."
+              },
+              {
+                "name": "relationship",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the publisher's relationship to the programme."
+              }
+            ]
+          },
+          "docs": "Return detail for a single advertiser programme including description, membership status, valid domains, KPIs, and the commission range across commission groups."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,983 @@
+{
+  "item": [
+    {
+      "id": "3374af48-9f78-4fb0-be38-73d3131a0d57",
+      "name": "Reports",
+      "description": {
+        "content": "Aggregated performance reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "705969ae-ddc8-43d9-ab18-2db11cb8dd8b",
+          "name": "Advertiser performance report for a publisher",
+          "request": {
+            "name": "Advertiser performance report for a publisher",
+            "description": {
+              "content": "Aggregated performance for a publisher, broken down by advertiser.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publishers",
+                ":publisherId",
+                "reports",
+                "advertiser"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "(Required) Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "UTC",
+                  "description": "Timezone identifier, defaults to UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisherId",
+                  "description": "(Required) The publisher account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32388784-25a3-43b5-9b44-df5173e6fcb9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publishers",
+                    ":publisherId",
+                    "reports",
+                    "advertiser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "UTC"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisherId",
+                      "description": "(Required) The publisher account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55b2f6d7-3dc4-49b8-9527-20caff865b25",
+          "name": "Creative performance report for a publisher",
+          "request": {
+            "name": "Creative performance report for a publisher",
+            "description": {
+              "content": "Aggregated transactions, clicks, and impressions by creative for a publisher.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publishers",
+                ":publisherId",
+                "reports",
+                "creative"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "(Required) Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "UTC",
+                  "description": "Timezone identifier, defaults to UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisherId",
+                  "description": "(Required) The publisher account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5e97c9f-95b0-4a26-ad71-886b58fb57e9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publishers",
+                    ":publisherId",
+                    "reports",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "UTC"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisherId",
+                      "description": "(Required) The publisher account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "445104b4-72df-45d5-a88f-a87ae165a565",
+          "name": "Campaign performance report for a publisher",
+          "request": {
+            "name": "Campaign performance report for a publisher",
+            "description": {
+              "content": "Aggregated clicks and transactions by campaign and advertiser for a publisher, listable in day, month, or year intervals.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publishers",
+                ":publisherId",
+                "reports",
+                "campaign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "UTC",
+                  "description": "Timezone identifier, defaults to UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisherId",
+                  "description": "(Required) The publisher account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb9ac563-fc26-4a79-b4e1-51559f76faaf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publishers",
+                    ":publisherId",
+                    "reports",
+                    "campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "UTC"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisherId",
+                      "description": "(Required) The publisher account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd1bf556-cf1e-404f-b915-000549b24801",
+          "name": "Publisher performance report for an advertiser",
+          "request": {
+            "name": "Publisher performance report for an advertiser",
+            "description": {
+              "content": "Aggregated performance for an advertiser, broken down by publisher.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "advertisers",
+                ":advertiserId",
+                "reports",
+                "publisher"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>",
+                  "description": "(Required) Timezone identifier, e.g. UTC, Europe/London, US/Eastern."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "advertiserId",
+                  "description": "(Required) The advertiser account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c75d6e8-115c-48cd-a1f5-d9f954d54bf3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "advertisers",
+                    ":advertiserId",
+                    "reports",
+                    "publisher"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "advertiserId",
+                      "description": "(Required) The advertiser account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3afdfba-b89a-4238-a3fc-249e7cc51d14",
+          "name": "Creative performance report for an advertiser",
+          "request": {
+            "name": "Creative performance report for an advertiser",
+            "description": {
+              "content": "Aggregated transactions, clicks, and impressions by creative for an advertiser.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "advertisers",
+                ":advertiserId",
+                "reports",
+                "creative"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "(Required) Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "UTC",
+                  "description": "Timezone identifier, defaults to UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "advertiserId",
+                  "description": "(Required) The advertiser account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99d90acb-1147-4435-bf56-e527dc1807d3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "advertisers",
+                    ":advertiserId",
+                    "reports",
+                    "creative"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "UTC"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "advertiserId",
+                      "description": "(Required) The advertiser account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f296d368-a8aa-42d0-8fac-89179c2f1ed0",
+          "name": "Campaign performance report for an advertiser",
+          "request": {
+            "name": "Campaign performance report for an advertiser",
+            "description": {
+              "content": "Aggregated clicks and transactions by campaign and publisher for an advertiser, listable in day, month, or year intervals.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "advertisers",
+                ":advertiserId",
+                "reports",
+                "campaign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date, format yyyy-MM-dd."
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "UTC",
+                  "description": "Timezone identifier, defaults to UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateType",
+                  "value": "transaction",
+                  "description": "Which date to aggregate the report on."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "advertiserId",
+                  "description": "(Required) The advertiser account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92a62bf9-487a-49c8-9855-d820c6ca2ad2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "advertisers",
+                    ":advertiserId",
+                    "reports",
+                    "campaign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "UTC"
+                    },
+                    {
+                      "key": "dateType",
+                      "value": "transaction"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "advertiserId",
+                      "description": "(Required) The advertiser account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"advertiserId\": 8839,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 4351,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 6207,\n    \"clicks\": 5829,\n    \"pendingNo\": 7838,\n    \"pendingValue\": 9694.947577193087,\n    \"pendingComm\": 2742.183083895603,\n    \"confirmedNo\": 3379,\n    \"confirmedValue\": 2448.979324112737,\n    \"confirmedComm\": 3080.6958769200487,\n    \"bonusNo\": 3041,\n    \"bonusValue\": 6104.886365373205,\n    \"bonusComm\": 1287.013288899186,\n    \"declinedNo\": 6057,\n    \"declinedValue\": 9331.864607762365,\n    \"declinedComm\": 5676.947887503484,\n    \"totalNo\": 4347,\n    \"totalValue\": 8566.22539390699,\n    \"totalComm\": 2744.442167729859\n  },\n  {\n    \"advertiserId\": 215,\n    \"advertiserName\": \"string\",\n    \"publisherId\": 6025,\n    \"publisherName\": \"string\",\n    \"region\": \"string\",\n    \"currency\": \"string\",\n    \"impressions\": 1647,\n    \"clicks\": 288,\n    \"pendingNo\": 4284,\n    \"pendingValue\": 3132.420235198192,\n    \"pendingComm\": 10.693857481407498,\n    \"confirmedNo\": 4773,\n    \"confirmedValue\": 4867.685259854584,\n    \"confirmedComm\": 5920.010786701716,\n    \"bonusNo\": 8991,\n    \"bonusValue\": 6430.991772052319,\n    \"bonusComm\": 1559.9819344612308,\n    \"declinedNo\": 9492,\n    \"declinedValue\": 8549.377025483502,\n    \"declinedComm\": 8660.033290841442,\n    \"totalNo\": 9637,\n    \"totalValue\": 8958.669955673657,\n    \"totalComm\": 1269.3390224593759\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.awin.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6159dad1-da5f-4c88-9c56-38cd2de9a6be",
+    "name": "Awin Accounts Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.\n\nContact Support:\n Name: Awin API Support",
+      "type": "text/plain"
+    }
+  }
+}

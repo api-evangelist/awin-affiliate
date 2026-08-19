@@ -1,16 +1,103 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/awin-affiliate-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/apidocs/api-authentication
+docs: https://help.awin.com/apidocs/api-authentication
+description: >-
+  Awin authenticates with a single long-lived token bound to a USER, not to an
+  account and not to an application. The token is created by a human in the
+  platform UI at https://ui.awin.com/awin-api after re-entering their password,
+  and it grants access to every publisher and advertiser account that user can
+  reach - Awin states this explicitly: "If you have access to 10 different Awin
+  publisher accounts via our website, then your personal API token grants you
+  access to data from all of those 10 accounts." Awin describes this as OAuth
+  2.0, but only bearer-token presentation (RFC 6750) is implemented: there is no
+  authorization endpoint, no token endpoint, no client registration, no grant
+  flow, no refresh and no scopes.
 summary:
   types:
   - http
+  - apiKey
+  api_key_in:
+  - header
+  - query
+  oauth2_flows: []
+  scopes: none
+  token_lifetime: non-expiring until manually revoked
+  token_granularity: user
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: OAuth 2.0 user-level access token generated at ui.awin.com/awin-api and sent
-    as an Authorization Bearer header. The Create Transactions API is the exception and uses
-    an x-api-key header instead. Many endpoints also accept the token as an accessToken query
-    parameter.
+  in: header
+  parameter: Authorization
+  format: "Bearer <token>"
+  description: >-
+    Default for every Awin API except Create Transactions / Conversion API.
+    Example from the docs - curl -X GET https://api.awin.com/publishers -H
+    "Authorization: Bearer <token>".
   sources:
-  - openapi/awin-affiliate-openapi.yml
+  - https://help.awin.com/apidocs/api-authentication
+  - openapi/_original/awin-affiliate-openapi.yml
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: >-
+    Used ONLY by the Create Transactions / Conversion API (POST
+    https://api.awin.com/s2s/advertiser/{advertiser_id}/orders). The same token
+    value is sent bare, without the "Bearer" prefix.
+  applies_to:
+  - https://help.awin.com/apidocs/conversion-api
+  sources:
+  - https://help.awin.com/apidocs/api-authentication
+- name: accessTokenQuery
+  type: apiKey
+  in: query
+  parameter: accessToken
+  description: >-
+    Many GET endpoints additionally accept the token as an `accessToken` query
+    parameter, and the API reference lists it as Required on several endpoints
+    (e.g. Get Link Builder Quota). Documented, but a credential-in-URL pattern
+    that leaks into server logs, proxy logs, referrers and browser history.
+  sources:
+  - https://help.awin.com/apidocs/quota
+  - openapi/_original/awin-affiliate-openapi.yml
+token_issuance:
+  url: https://ui.awin.com/awin-api
+  ui_path: User menu (top right) > API Credentials
+  requires: Admin access on the account, plus re-entry of the account password
+  permission_path:
+    advertisers: Account > Account Permissions
+    publishers: Account > User Permissions
+  propagation_delay: >-
+    Adding or removing a user from an account can take up to 10 minutes to take
+    effect on the token's reach.
+  programmatic: false
+token_revocation:
+  url: https://ui.awin.com/awin-api
+  method: '"Revoke my API token" button in the UI'
+  effect: >-
+    Immediate and total - every integration using that token stops working at
+    once. There is no per-integration credential to rotate independently.
+  programmatic: false
+entitlement:
+  note: >-
+    Advertiser API access is gated by commercial plan - "API access for
+    Advertisers is limited to Accelerate and Advanced plans only." Publisher API
+    access is not plan-gated. See plans/awin-affiliate-plans-pricing.yml.
+gaps:
+- No OAuth authorization-code or client-credentials flow; no application identity.
+- No scopes - a token that only needs to read reports can also validate transactions and create offers.
+- No expiry and no rotation story; the only lifecycle event is manual revocation.
+- No per-account or per-integration credentials - blast radius is every account the human can reach.
+- No /.well-known/openid-configuration or /.well-known/oauth-authorization-server (both 404 on all hosts).
+- No MFA/step-up documented for token creation beyond password re-entry.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://help.awin.com/apidocs/api-authentication.md
+    http_status: 200
+  - url: https://api.awin.com/.well-known/openid-configuration
+    http_status: 404
+  - url: https://api.awin.com/.well-known/oauth-authorization-server
+    http_status: 404

@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "337a328b-b733-4463-abd5-e46e4d84eb6f",
+      "name": "Programmes",
+      "description": {
+        "content": "Advertiser programmes and their details.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8603b83-bd1d-429a-a5bc-a02ab85c4112",
+          "name": "Get programmes for a publisher",
+          "request": {
+            "name": "Get programmes for a publisher",
+            "description": {
+              "content": "List the advertiser programmes a publisher has a relationship with, filtered by relationship and optionally by country.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publishers",
+                ":publisherId",
+                "programmes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "relationship",
+                  "value": "joined",
+                  "description": "Filter by the publisher's relationship to the programme."
+                },
+                {
+                  "disabled": false,
+                  "key": "countryCode",
+                  "value": "<string>",
+                  "description": "Two-letter country code to filter programmes."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisherId",
+                  "description": "(Required) The publisher account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ddd080cc-7d68-418d-8bf7-1ebe5c8900e3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publishers",
+                    ":publisherId",
+                    "programmes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relationship",
+                      "value": "joined"
+                    },
+                    {
+                      "key": "countryCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisherId",
+                      "description": "(Required) The publisher account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3375,\n    \"name\": \"string\",\n    \"displayUrl\": \"string\",\n    \"clickThroughUrl\": \"string\",\n    \"deeplinkEnabled\": false,\n    \"membershipStatus\": \"string\",\n    \"logoUrl\": \"string\",\n    \"currencyCode\": \"string\",\n    \"primaryRegion\": {},\n    \"validDomains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": 7367,\n    \"name\": \"string\",\n    \"displayUrl\": \"string\",\n    \"clickThroughUrl\": \"string\",\n    \"deeplinkEnabled\": false,\n    \"membershipStatus\": \"string\",\n    \"logoUrl\": \"string\",\n    \"currencyCode\": \"string\",\n    \"primaryRegion\": {},\n    \"validDomains\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ebf453dd-f5da-48d2-af4e-f1b30728678f",
+          "name": "Get programme details for a publisher",
+          "request": {
+            "name": "Get programme details for a publisher",
+            "description": {
+              "content": "Return detail for a single advertiser programme including description, membership status, valid domains, KPIs, and the commission range across commission groups.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publishers",
+                ":publisherId",
+                "programmedetails"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "advertiserId",
+                  "value": "<integer>",
+                  "description": "(Required) The advertiser identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "relationship",
+                  "value": "joined",
+                  "description": "Filter by the publisher's relationship to the programme."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisherId",
+                  "description": "(Required) The publisher account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eeea6ed4-1840-43f4-8638-f7ab9317be54",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publishers",
+                    ":publisherId",
+                    "programmedetails"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "advertiserId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "relationship",
+                      "value": "joined"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisherId",
+                      "description": "(Required) The publisher account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"programmeInfo\": {\n    \"id\": 6811,\n    \"name\": \"string\",\n    \"displayUrl\": \"string\",\n    \"clickThroughUrl\": \"string\",\n    \"deeplinkEnabled\": false,\n    \"membershipStatus\": \"string\",\n    \"logoUrl\": \"string\",\n    \"currencyCode\": \"string\",\n    \"primaryRegion\": {},\n    \"validDomains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"kpi\": {\n    \"averagePaymentTime\": 2258.9166843278176,\n    \"approvalPercentage\": 283.88225971600735,\n    \"epc\": 4614.827262331112,\n    \"conversionRate\": 2995.792030566794,\n    \"validationDays\": 90,\n    \"awinIndex\": 8260.472395320663\n  },\n  \"commissionRange\": [\n    {\n      \"min\": 2625.0846165941844,\n      \"max\": 171.42847067986966,\n      \"type\": \"string\"\n    },\n    {\n      \"min\": 3663.696973586765,\n      \"max\": 3575.141718267921,\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.awin.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3d8e87d7-e489-43b4-bf00-08abfa0fc01d",
+    "name": "Awin Accounts Programmes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.\n\nContact Support:\n Name: Awin API Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, and the github.com/awin organisation
+  listing, cross-checked against help.awin.com/apidocs
+description: >-
+  Awin publishes NO first-party API client library in any public package
+  registry. npm, PyPI and RubyGems were all searched for awin / awin-api /
+  awin-sdk / affiliate-window and every hit is community-maintained. What Awin
+  DOES publish as first-party code is a set of tracking artefacts on
+  github.com/awin - Google Tag Manager templates for the MasterTag, Conversion
+  Tag, consent signals and last-click identifier, plus a GTIN validator - none
+  of which wrap the REST API at api.awin.com. The documented integration path
+  for non-developers is Zapier rather than an SDK. Consumers of the REST API
+  are expected to call it directly with an HTTP client.
+official_sdk_count: 0
+notes: >-
+  Because no official client library exists, no `SDKs` pointer is wired in
+  apis.yml. Recording the absence is the finding: an affiliate network of
+  Awin's size shipping zero maintained client libraries is a real developer
+  experience gap, and the third-party packages below are the only libraries a
+  developer can reach for - the newest of them was last published 2026-02-04
+  and the rest are five to eight years stale.
+packages:
+- language: javascript
+  registry: github
+  name: awin/awin-advertiser-mastertag-google-tag-manager
+  url: https://github.com/awin/awin-advertiser-mastertag-google-tag-manager
+  install: null
+  official: true
+  version: null
+  published: '2024-10-16'
+  note: >-
+    Google Tag Manager custom template for the Awin Advertiser MasterTag. Not a
+    registry package and not an API client - distributed as a GTM template from
+    the repo. version null because there is no registry metadata endpoint and no
+    tag was readable (GitHub API rate-limited during this pass); `published` is
+    the last push date observed on the repo listing.
+- language: javascript
+  registry: github
+  name: awin/awin-conversion-tag-google-tag-manager
+  url: https://github.com/awin/awin-conversion-tag-google-tag-manager
+  install: null
+  official: true
+  version: null
+  published: '2024-10-16'
+  note: GTM custom template for the Awin Conversion Tag. Tracking artefact, not an API SDK.
+- language: javascript
+  registry: github
+  name: awin/awin-consent-signals-gtm
+  url: https://github.com/awin/awin-consent-signals-gtm
+  install: null
+  official: true
+  version: null
+  published: '2025-12-15'
+  note: GTM template carrying Awin consent signals into the tag.
+- language: javascript
+  registry: github
+  name: awin/awin-last-click-identifier
+  url: https://github.com/awin/awin-last-click-identifier
+  install: null
+  official: true
+  version: null
+  published: '2024-10-16'
+  note: Client-side last-click identifier used by Awin tracking.
+- language: javascript
+  registry: github
+  name: awin/server-side-awin-last-click-identifier
+  url: https://github.com/awin/server-side-awin-last-click-identifier
+  install: null
+  official: true
+  version: null
+  published: '2025-12-15'
+  note: Server-side GTM variant of the last-click identifier.
+- language: javascript
+  registry: github
+  name: awin/GTM_CustomTag_AwinLastClickIdentifier
+  url: https://github.com/awin/GTM_CustomTag_AwinLastClickIdentifier
+  install: null
+  official: true
+  version: null
+  published: '2026-05-27'
+  note: Most recently touched first-party repo in the org.
+- language: javascript
+  registry: github
+  name: awin/gtin-validator
+  url: https://github.com/awin/gtin-validator
+  install: null
+  official: true
+  version: null
+  published: '2025-05-20'
+  note: GTIN validation helper for product feeds. Feed tooling, not an API client.
+- language: javascript
+  registry: npm
+  name: awin-webmaster-api
+  url: https://www.npmjs.com/package/awin-webmaster-api
+  install: npm install awin-webmaster-api
+  official: false
+  version: 1.2.0
+  published: '2026-02-04'
+  note: >-
+    Community package (github.com/nebaz/awin-webmaster-api). The freshest
+    third-party Awin API wrapper found on npm.
+- language: javascript
+  registry: npm
+  name: awin-api-nodejs
+  url: https://www.npmjs.com/package/awin-api-nodejs
+  install: npm install awin-api-nodejs
+  official: false
+  version: 1.0.2
+  published: '2020-11-18'
+  note: Community package (github.com/vigiadepreco/awin-api-nodejs). Unmaintained since 2020.
+- language: javascript
+  registry: npm
+  name: affiliate-window
+  url: https://www.npmjs.com/package/affiliate-window
+  install: npm install affiliate-window
+  official: false
+  version: 1.0.3
+  published: '2018-06-05'
+  note: >-
+    Community helper written against the legacy Affiliate Window branding
+    (github.com/denodell/affiliate-window). Unmaintained since 2018.
+registries_checked:
+- registry: npm
+  result: no first-party package
+- registry: pypi
+  result: 404 for awin, awin-api, pyawin, awin-sdk
+- registry: rubygems
+  result: 404 for awin, awin-api
+- registry: github
+  result: github.com/awin exists - 9 public repos, all tracking/feed tooling or hiring code tests
+x-evidence:
+  fetched: '2026-08-13'
+  sources:
+  - https://registry.npmjs.org/-/v1/search?text=awin
+  - https://pypi.org/pypi/awin/json
+  - https://rubygems.org/api/v1/gems/awin.json
+  - https://api.github.com/users/awin/repos

@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin Accounts Transactions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of transactions for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/transactions/",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, e.g. UTC, Europe/London, US/Eastern."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to filter transactions on."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by status."
+              },
+              {
+                "name": "showBasketProducts",
+                "value": "",
+                "type": "query",
+                "description": "Include basket products when product-level tracking is enabled."
+              },
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "query",
+                "description": "Single advertiser ID or comma-separated list."
+              }
+            ]
+          },
+          "docs": "Pull individual transactions for a publisher over a date range of up to 31 days. Times use the yyyy-MM-ddThh:mm:ss format in the given timezone."
+        },
+        {
+          "info": {
+            "name": "Get list of transactions for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/:advertiserId/transactions/",
+            "params": [
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "path",
+                "description": "The advertiser account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, e.g. UTC, Europe/London, US/Eastern."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to filter transactions on."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions by status."
+              },
+              {
+                "name": "showBasketProducts",
+                "value": "",
+                "type": "query",
+                "description": "Include basket products when product-level tracking is enabled."
+              },
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "query",
+                "description": "Single publisher ID or comma-separated list."
+              }
+            ]
+          },
+          "docs": "Pull individual transactions for an advertiser over a date range of up to 31 days."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,75 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/developers/docs/testing-your-integration
+docs:
+- https://help.awin.com/developers/docs/testing-your-integration
+- https://help.awin.com/apidocs/introduction-1
+description: >-
+  Awin has NO sandbox environment and no test/live key separation. There is one
+  set of credentials, one base URL (https://api.awin.com) and one dataset - the
+  token you mint at ui.awin.com/awin-api reaches production data for every
+  account your user can access. What Awin does provide is (a) an interactive
+  "Try It Now" console embedded in the API reference, which executes real calls
+  against production using your real token, and (b) a UI-driven test-transaction
+  generator used to validate tracking integrations, which is a tracking test
+  rather than an API test.
+test_live_separation:
+  supported: false
+  key_prefixes: none
+  modes: none
+  note: >-
+    No test-mode token, no test-mode header, no sandbox host. Every documented
+    example targets https://api.awin.com directly. An agent or a new integration
+    has nowhere to rehearse a write - including against the Conversion API and
+    the batch validation endpoint, which move commission money.
+console:
+  name: Try It Now
+  location: embedded in each endpoint page on https://help.awin.com/apidocs
+  url: https://help.awin.com/apidocs/introduction-1
+  requires_real_token: true
+  note: >-
+    "Since access to our APIs is limited to user level, it requires you to obtain
+    your token from our interface which can then be used in the Try It Now
+    features." Calls are live against production.
+test_transaction:
+  name: Tracking Diagnosis - Create a test transaction
+  surface: Awin platform UI
+  path: Navigation Bar > Support > Integration > Tracking Diagnosis
+  url: https://ui.awin.com/
+  api_accessible: false
+  purpose: >-
+    Validates a newly installed tracking integration (MasterTag / Conversion Tag
+    / S2S) end to end before a programme goes live. An assigned Awin Integrations
+    contact reviews the result and gives technical sign-off.
+  documented_conditions:
+  - Disable ad/tracking blockers such as uBlock or AdBlock.
+  - Do not test in Safari.
+  - Do not test on mobile or tablet unless directed.
+  - For Product Level Tracking, include two items with different quantities.
+  - Screenshot the order confirmation showing order reference, order total, line items, coupons and any tax/shipping/service fees.
+  - If the programme is already live, consult Advertiser Support before testing.
+  note: >-
+    Human-in-the-loop by design - the test is created in the UI, executed by
+    placing a real order, and signed off by an Awin employee reviewing a
+    screenshot. There is no programmatic equivalent.
+magic_values: []
+test_credentials: []
+fixtures: []
+time_simulation:
+  supported: false
+gaps:
+- No sandbox host or test-mode credential of any kind.
+- Write surfaces (Conversion API, batch validation, Create Offers) can only be exercised against production.
+- >-
+  The Conversion API documents a 3-minute ingestion delay and a tracking-method
+  prioritisation window, so even a deliberate production test has a slow,
+  non-deterministic feedback loop.
+- No published test card / test identifier / simulator values, because Awin does not process payments.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://help.awin.com/developers/docs/testing-your-integration.md
+    http_status: 200
+  - url: https://sandbox.awin.com
+    http_status: 0
+    note: does not resolve

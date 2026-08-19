@@ -1,0 +1,123 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/apidocs/response-codes
+docs:
+- https://help.awin.com/apidocs/response-codes
+- https://help.awin.com/apidocs/approve-decline-amend-batch-transactions-for-a-given-advertiser
+format: http-status
+description: >-
+  Awin does not publish RFC 9457 problem+json. It publishes a plain HTTP status
+  reference page describing what each status means across the platform, plus a
+  per-endpoint "Common Response Codes" table on the Batch Validation endpoint
+  that gives the only genuinely domain-specific error semantics in the API. Live
+  unauthenticated calls to api.awin.com return a bare JSON envelope of the shape
+  {"error": "...", "description": "..."} - observed on 2026-08-13 for both a
+  missing token (error "unauthorized") and an unknown path (error "exception").
+  There is no machine-readable error-type registry, no error code beyond the
+  HTTP status, and no `type` URI.
+envelope:
+  media_type: application/json
+  fields:
+  - name: error
+    description: Short machine token. Observed values - "unauthorized", "exception".
+    example: unauthorized
+  - name: description
+    description: Human-readable explanation.
+    example: Full authentication is required to access this resource
+  observed_on: https://api.awin.com/openapi.json
+  observed_at: '2026-08-13'
+  note: >-
+    This envelope was observed live, not documented. Awin's docs describe status
+    codes but never show the error body shape, so a client cannot know from the
+    documentation what to parse.
+problems:
+- status: 400
+  title: Bad Request
+  detail: The server could not understand the request due to invalid syntax or parameters.
+  remediation: >-
+    On the batch validation endpoint a 400 is reported as "JSON parse error" -
+    ensure the JSON body is enclosed in square brackets (it is an array of
+    transaction objects).
+  source: https://help.awin.com/apidocs/response-codes
+- status: 401
+  title: Unauthorized
+  detail: Authentication is required or has failed.
+  remediation: >-
+    Send the user-level token as `Authorization: Bearer <token>` (or `x-api-key`
+    for the Create Transactions / Conversion API). Regenerate at
+    https://ui.awin.com/awin-api if revoked.
+  source: https://help.awin.com/apidocs/response-codes
+- status: 403
+  title: Forbidden
+  detail: The caller does not have permission to access this resource.
+  remediation: >-
+    Confirm Admin access on the account (Account > Account Permissions for
+    advertisers, Account > User Permissions for publishers). Permission changes
+    can take up to 10 minutes to take effect. Advertiser API access requires the
+    Accelerate or Advanced plan.
+  source: https://help.awin.com/apidocs/api-authentication
+- status: 404
+  title: Not Found
+  detail: The requested resource does not exist.
+  remediation: >-
+    On batch validation, a 404 means the transactionId - or the
+    (orderRef, transactionDate, timezone) triple - matched no transaction.
+  source: https://help.awin.com/apidocs/approve-decline-amend-batch-transactions-for-a-given-advertiser
+- status: 409
+  title: Conflict
+  detail: The request conflicts with the current state, for example a duplicate entry.
+  source: https://help.awin.com/apidocs/response-codes
+- status: 422
+  title: Unprocessable Entity
+  detail: >-
+    Semantically valid but not executable against the current transaction state -
+    for example approving an already-declined transaction.
+  remediation: >-
+    Awin also returns 422 on amendTrackingParameters for CPO advertisers,
+    transactions whose sale amount or commission was previously amended, shared
+    transactions, subnetwork-publisher transactions, and any transaction dated
+    before June 2023.
+  source: https://help.awin.com/apidocs/approve-decline-amend-batch-transactions-for-a-given-advertiser
+- status: 429
+  title: Too Many Requests
+  detail: The platform throttle of 20 API calls per minute per user was exceeded.
+  remediation: >-
+    Throttle below 20 calls/minute and back off exponentially with jitter. The
+    budget is per USER, not per account, so a token reaching many accounts still
+    shares one budget. See rate-limits/awin-affiliate-rate-limits.yml.
+  source: https://help.awin.com/apidocs/introduction-1
+- status: 500
+  title: Internal Server Error
+  detail: Something went wrong on the Awin side.
+  source: https://help.awin.com/apidocs/response-codes
+- status: 502
+  title: Bad Gateway
+  detail: Awin received an invalid response from an upstream server.
+  source: https://help.awin.com/apidocs/response-codes
+- status: 503
+  title: Service Unavailable
+  detail: Awin is overloaded or down for maintenance. Check https://status.awin.com.
+  source: https://help.awin.com/apidocs/response-codes
+- status: 504
+  title: Gateway Timeout
+  detail: Awin did not get a timely response from an upstream server.
+  source: https://help.awin.com/apidocs/response-codes
+non_error_statuses:
+- status: 304
+  title: Not Modified
+  detail: >-
+    On batch validation this is NOT a cache signal - it means the transaction was
+    already in the requested commission state (e.g. declining an already-declined
+    transaction). Clients must not treat it as a failure.
+  source: https://help.awin.com/apidocs/approve-decline-amend-batch-transactions-for-a-given-advertiser
+- status: 202
+  title: Accepted
+  detail: Accepted for processing but not yet complete - used by the batch surfaces.
+gaps:
+- No RFC 9457 application/problem+json.
+- No stable error code or `type` URI - the HTTP status is the only discriminator.
+- The JSON error envelope shape is undocumented; it had to be observed live.
+- >-
+  The repo OpenAPI declares only 200 responses on all twelve operations, so no
+  error responses can be derived from the spec - everything above came from docs
+  and live probes.

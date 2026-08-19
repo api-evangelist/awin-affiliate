@@ -1,0 +1,141 @@
+{
+  "item": [
+    {
+      "id": "d1b32570-63ab-4008-9794-1b5bf9aaf63f",
+      "name": "Accounts",
+      "description": {
+        "content": "Accounts the authenticated user can access.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b98c4002-b6db-448b-9a58-2ae1b1a9e80d",
+          "name": "Get accounts for the authenticated user",
+          "request": {
+            "name": "Get accounts for the authenticated user",
+            "description": {
+              "content": "Return the list of accounts associated with the user. Because tokens are user-level, this enumerates every publisher and advertiser account the user can access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accessToken",
+                  "value": "<string>",
+                  "description": "(Required) User-level access token (also accepted as an Authorization Bearer header)."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter by account type."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d33ccbe6-f0a8-47e9-8974-db62f05fcb15",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accounts\": [\n    {\n      \"accountId\": 65,\n      \"accountName\": \"string\",\n      \"accountType\": \"publisher\",\n      \"userRole\": \"string\"\n    },\n    {\n      \"accountId\": 4701,\n      \"accountName\": \"string\",\n      \"accountType\": \"publisher\",\n      \"userRole\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.awin.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "53985862-44ca-4fdd-9ccf-a9e593ffa0dd",
+    "name": "Awin Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.\n\nContact Support:\n Name: Awin API Support",
+      "type": "text/plain"
+    }
+  }
+}

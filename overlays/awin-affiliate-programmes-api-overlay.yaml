@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Awin Accounts Programmes API
+  version: 1.0.0
+extends: openapi/awin-affiliate-programmes-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: https://help.awin.com/apidocs + this repo artifacts
+actions:
+- target: $.info
+  description: Record API Evangelist provenance and the platform constraints Awin documents in prose but
+    never encodes in a contract.
+  update:
+    x-apievangelist-provider: awin-affiliate
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-spec-origin: reconstructed-from-docs
+    x-apievangelist-docs: https://help.awin.com/apidocs/introduction-1
+    x-apievangelist-llms-txt: https://help.awin.com/llms.txt
+    x-rate-limit:
+      requests: 20
+      window: 1m
+      scope: user
+      headers: null
+      exhaustion-status: 429
+      docs: https://help.awin.com/apidocs/introduction-1
+    x-idempotency:
+      supported: false
+      note: Awin documents no idempotency key on any surface.
+    x-pagination:
+      supported: false
+      note: No page/offset/cursor/limit parameters; result sets are bounded by date windows.
+    x-sandbox:
+      available: false
+      note: No test mode, no test credentials. Every call is production.
+    x-status-page: https://status.awin.com
+- target: $.paths['/publishers/{publisherId}/programmes'].get
+  description: Attach documentation link, agentic-access classification.
+  update:
+    x-apievangelist-docs: https://help.awin.com/apidocs/get-program-information-for-publisher-by-relationship-and-optionally-filter-by-country
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      token:
+        max-ttl: 3600
+- target: $.paths['/publishers/{publisherId}/programmedetails'].get
+  description: Attach documentation link, agentic-access classification.
+  update:
+    x-apievangelist-docs: https://help.awin.com/apidocs/get-program-information-details-for-publisher
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      token:
+        max-ttl: 3600

@@ -4,8 +4,12 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Awin
 providerId: awin-affiliate
 created: '2026-07-05'
-modified: '2026-07-05'
+modified: '2026-08-13'
 reconciled: true
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/apidocs/introduction-1
+limit_count: 6
 tags:
 - Affiliate Marketing
 - Advertising
@@ -27,18 +31,72 @@ sources:
 - https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
 responseCodes:
   throttled: 429
+responseHeaders:
+  documented: false
+  headers: []
+  retryAfter: false
+  notes: >-
+    Awin publishes the NUMBER but no runtime signal. No X-RateLimit-*, no
+    RateLimit-* (RFC 9239 draft), no Retry-After is documented anywhere in the
+    API reference, and none was observed on live unauthenticated responses from
+    api.awin.com on 2026-08-13. An agent cannot discover its remaining budget and
+    must count its own calls client-side. This is the single most consequential
+    runtime gap in the Awin API for automated consumers.
 limits:
 - name: Requests Per Minute
   scope: user
   metric: requests
   limit: 20
   window: 60s
-  notes: Platform-wide throttle shared across all accounts the user token can access.
+  notes: >-
+    Platform-wide throttle shared across all accounts the user token can access.
+    Documented on the API introduction page.
+  source: https://help.awin.com/apidocs/introduction-1
+- name: Create Offers Requests Per Minute
+  scope: endpoint
+  metric: requests
+  limit: 50
+  window: 60s
+  notes: >-
+    The Post Offers page states a 50 calls-per-minute limitation on that surface,
+    which contradicts the platform-wide 20/min figure on the introduction page.
+    Awin does not reconcile the two. Recorded as published; treat 20/min as the
+    safe planning figure.
+  source: https://help.awin.com/apidocs/offers-api
 - name: Transaction Date Range
   scope: request
   metric: days
   limit: 31
   notes: Maximum span between startDate and endDate on the transaction list endpoints.
+  source: https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
+- name: Conversion API Batch Size
+  scope: request
+  metric: orders
+  limit: 1000
+  notes: >-
+    Maximum orders per batch on POST /s2s/advertiser/{advertiser_id}/orders. The
+    docs also prescribe a batching CADENCE - not shorter than 10 seconds (to stay
+    inside the call limit) and not longer than 60 seconds (or the S2S call loses
+    tracking-method priority).
+  source: https://help.awin.com/apidocs/conversion-api
+- name: Batch Validation Size
+  scope: request
+  metric: transaction objects
+  limit: 40000
+  notes: Maximum transaction objects in one POST /advertisers/{advertiserId}/transactions/batch request.
+  source: https://help.awin.com/apidocs/approve-decline-amend-batch-transactions-for-a-given-advertiser
+- name: Link Builder Short-Link Quota
+  scope: account
+  metric: short links
+  limit: null
+  window: 24h
+  notes: >-
+    A per-publisher 24-hour cap on generated short links. The value is
+    account-specific and not published - it is readable at runtime from GET
+    /publishers/{publisherId}/linkbuilder/quota, which returns limit (max in
+    24hrs) and usage (generated in the last 24hrs). This is the ONLY runtime
+    quota signal Awin exposes anywhere in the API.
+  source: https://help.awin.com/apidocs/quota
 policies:
 - name: User-Level Scope
   description: >-

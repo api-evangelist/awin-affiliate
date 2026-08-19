@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin Accounts Commission Groups API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commission Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get commission groups for an advertiser programme",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/commissiongroups",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "query",
+                "description": "The advertiser identifier."
+              },
+              {
+                "name": "effectiveDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO-8601 timestamp to retrieve historical rates."
+              },
+              {
+                "name": "extraConditionsDetails",
+                "value": "",
+                "type": "query",
+                "description": "Include condition values when true."
+              }
+            ]
+          },
+          "docs": "Return all commission groups of a programme along with the commission values a publisher earns."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

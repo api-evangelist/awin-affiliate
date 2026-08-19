@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/_original/awin-affiliate-openapi.yml grounded against the published
+  documentation at help.awin.com/apidocs
+description: >-
+  Packaged Agent Skills for the Awin API. Every operationId referenced below was
+  verified present in the OpenAPI in this repo. Awin publishes no AGENTS.md, no
+  skills files and no agent guidance of its own - these are API Evangelist
+  generated operating instructions, not provider artifacts.
+skills:
+- file: awin-affiliate-publisher-transaction-reconciliation.md
+  name: Reconcile Awin publisher transactions
+  api: openapi/awin-affiliate-transactions-api-openapi.yml
+  operations: [getAccounts, getPublisherTransactions, getCommissionGroups]
+- file: awin-affiliate-publisher-performance-reporting.md
+  name: Report Awin publisher performance
+  api: openapi/awin-affiliate-reports-api-openapi.yml
+  operations: [getAccounts, getPublisherAdvertiserReport, getPublisherCampaignReport, getPublisherCreativeReport]
+- file: awin-affiliate-advertiser-performance-reporting.md
+  name: Report Awin advertiser programme performance
+  api: openapi/awin-affiliate-reports-api-openapi.yml
+  operations: [getAccounts, getAdvertiserPublisherReport, getAdvertiserCampaignReport, getAdvertiserCreativeReport]
+- file: awin-affiliate-programme-discovery.md
+  name: Discover and qualify Awin advertiser programmes
+  api: openapi/awin-affiliate-programmes-api-openapi.yml
+  operations: [getAccounts, getProgrammes, getProgrammeDetails, getCommissionGroups]
+- file: awin-affiliate-advertiser-transaction-audit.md
+  name: Audit Awin advertiser transactions
+  api: openapi/awin-affiliate-transactions-api-openapi.yml
+  operations: [getAccounts, getAdvertiserTransactions]
+cross_cutting_rules:
+- 20 API calls per minute per USER, shared across every account the token reaches; no rate-limit response headers exist.
+- Transaction listing windows cap at 31 days.
+- No sandbox, no test mode, no test credentials - every call is production.
+- No idempotency key on any write surface.
+- Token is user-level and unscoped; revocation is all-or-nothing.
+- Advertiser API access requires the Accelerate or Advanced plan.

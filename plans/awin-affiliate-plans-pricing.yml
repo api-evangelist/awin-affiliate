@@ -4,8 +4,17 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Awin
 providerId: awin-affiliate
 created: '2026-07-05'
-modified: '2026-07-05'
+modified: '2026-08-13'
 reconciled: true
+generated: '2026-08-13'
+method: searched
+source: https://www.awin.com/us/pricing/advertisers
+plan_count: 4
+apiEntitlement: >-
+  Confirmed 2026-08-13 against https://help.awin.com/apidocs/api-authentication -
+  "API access for Advertisers is limited to Accelerate and Advanced plans only."
+  Publisher API access is not plan-gated. The API itself carries no separate
+  metered fee.
 tags:
 - Affiliate Marketing
 - Advertising

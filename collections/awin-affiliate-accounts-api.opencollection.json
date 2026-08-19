@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin Accounts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get accounts for the authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/accounts",
+            "params": [
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account type."
+              }
+            ]
+          },
+          "docs": "Return the list of accounts associated with the user. Because tokens are user-level, this enumerates every publisher and advertiser account the user can access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

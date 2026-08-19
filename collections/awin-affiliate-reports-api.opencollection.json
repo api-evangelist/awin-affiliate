@@ -1,0 +1,336 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Awin Accounts Reports API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Advertiser performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/reports/advertiser",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, defaults to UTC."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated performance for a publisher, broken down by advertiser."
+        },
+        {
+          "info": {
+            "name": "Creative performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/reports/creative",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, defaults to UTC."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated transactions, clicks, and impressions by creative for a publisher."
+        },
+        {
+          "info": {
+            "name": "Campaign performance report for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/publishers/:publisherId/reports/campaign",
+            "params": [
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "path",
+                "description": "The publisher account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, defaults to UTC."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated clicks and transactions by campaign and advertiser for a publisher, listable in day, month, or year intervals."
+        },
+        {
+          "info": {
+            "name": "Publisher performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/:advertiserId/reports/publisher",
+            "params": [
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "path",
+                "description": "The advertiser account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, e.g. UTC, Europe/London, US/Eastern."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated performance for an advertiser, broken down by publisher."
+        },
+        {
+          "info": {
+            "name": "Creative performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/:advertiserId/reports/creative",
+            "params": [
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "path",
+                "description": "The advertiser account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, defaults to UTC."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated transactions, clicks, and impressions by creative for an advertiser."
+        },
+        {
+          "info": {
+            "name": "Campaign performance report for an advertiser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.awin.com/advertisers/:advertiserId/reports/campaign",
+            "params": [
+              {
+                "name": "advertiserId",
+                "value": "",
+                "type": "path",
+                "description": "The advertiser account identifier."
+              },
+              {
+                "name": "accessToken",
+                "value": "",
+                "type": "query",
+                "description": "User-level access token (also accepted as an Authorization Bearer header)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date, format yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date, format yyyy-MM-dd."
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query",
+                "description": "Timezone identifier, defaults to UTC."
+              },
+              {
+                "name": "dateType",
+                "value": "",
+                "type": "query",
+                "description": "Which date to aggregate the report on."
+              }
+            ]
+          },
+          "docs": "Aggregated clicks and transactions by campaign and publisher for an advertiser, listable in day, month, or year intervals."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

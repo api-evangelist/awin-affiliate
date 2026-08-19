@@ -1,0 +1,70 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/apidocs/introduction-1
+description: >-
+  Awin runs an unversioned API. Every documented endpoint sits directly under
+  https://api.awin.com with no version segment, no version header and no
+  documented version negotiation - the docs site organises pages under a
+  /v1-api/ path prefix but the callable base URL carries no version. There is no
+  published deprecation policy, no Sunset/Deprecation header support (RFC 8594)
+  and no SLA document. Awin DOES run a real Atlassian Statuspage at
+  status.awin.com with per-component status (Click, and other tracking and
+  platform components) and a monthly product-release stream that acts as the
+  change record.
+versioning:
+  scheme: none
+  current: null
+  in_url: false
+  header: null
+  docs: https://help.awin.com/apidocs/introduction-1
+  note: >-
+    Base URL is https://api.awin.com with no version path. The /v1-api/ prefix
+    appears only in documentation-site URLs, not in callable endpoints. An
+    unversioned public API with no deprecation policy means any breaking change
+    reaches every consumer at once.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy published anywhere on help.awin.com. No
+    `Deprecation` pointer is wired in apis.yml as a result - asserting one would
+    credit Awin with a policy it does not publish.
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment found for the API.
+status_page: https://status.awin.com
+status_page_details:
+  provider: Atlassian Statuspage
+  api: https://status.awin.com/api/v2/summary.json
+  machine_readable: true
+  page_id: fwndk5b725ny
+  page_name: Awin Service
+  components_observed:
+  - name: Click
+    status: operational
+    description: Tracking of consumer clicks on affiliate links and banner adverts.
+  note: >-
+    status.awin.com serves the full Statuspage v2 JSON API unauthenticated -
+    summary.json, components.json, incidents.json - so an agent can poll Awin
+    health without scraping.
+change_record:
+  url: https://www.awin.com/gb/product-releases
+  docs: https://help.awin.com/docs/release-notes
+  cadence: monthly
+  note: >-
+    Platform product releases, not an API changelog. See
+    changelog/awin-affiliate-changelog.yml.
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://status.awin.com
+    http_status: 200
+  - url: https://status.awin.com/api/v2/summary.json
+    http_status: 200
+  - url: https://help.awin.com/apidocs/changelog
+    http_status: 404
+  - url: https://www.awin.com/gb/product-releases
+    http_status: 200

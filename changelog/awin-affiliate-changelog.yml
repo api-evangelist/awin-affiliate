@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/docs/release-notes
+docs: https://www.awin.com/gb/product-releases
+description: >-
+  Awin publishes a dated, monthly Product Releases stream mirrored into the help
+  centre as Release notes. It is a PLATFORM changelog, not an API changelog -
+  entries describe UI, reporting and commission-management changes, and none of
+  the four most recent months announces an API addition, removal or breaking
+  change. There is no /apidocs/changelog page (404) and no per-endpoint version
+  history, so an API consumer has no dated record of contract changes.
+scheme: dated-monthly
+current_version: null
+versioning_note: >-
+  The API is unversioned (see lifecycle/awin-affiliate-lifecycle.yml), so
+  entries carry a month rather than a version number.
+machine_readable: true
+machine_readable_note: >-
+  Every release-notes page is retrievable as markdown by appending .md to its
+  help.awin.com URL - a real agent-readable change surface even though it is not
+  API-scoped.
+entries:
+- date: '2026-06'
+  version: null
+  url: https://help.awin.com/docs/june-2026
+  breaking: false
+  highlights:
+  - AI visibility report - measures how a brand surfaces in AI-driven search and which partner content drives AI-informed purchases.
+  - Campaign builder improvements - Activity Stream notifications on partner add and on marketplace joins; partner search aligned with main platform search; region and link fields pre-filled on voucher/promotion creation.
+  - Commission data export added to the Review commission payments page for pending and validated commissions.
+  api_impact: none announced
+- date: '2026-05'
+  version: null
+  url: https://help.awin.com/docs/may-2026
+  breaking: false
+  highlights:
+  - Commission settings for campaigns.
+  - Editing the commission payments table.
+  - Prepayments card-expiry notifications (ShareASale only).
+  api_impact: none announced
+- date: '2026-04'
+  version: null
+  url: https://help.awin.com/docs/april-2026
+  breaking: false
+  highlights:
+  - Smart Search.
+  - Support form.
+  - Program profile.
+  - Reports scheduling.
+  api_impact: none announced
+- date: '2026-03'
+  version: null
+  url: https://help.awin.com/docs/march-2026
+  breaking: false
+  highlights:
+  - "Welcome to the new Awin - platform relaunch."
+  - Dashboard and performance insights.
+  - Campaign management enhancements.
+  - Partnerships and partner discovery.
+  - Reporting improvements.
+  - Transaction management.
+  - "Ava - AI virtual assistant."
+  api_impact: none announced
+gaps:
+- No API-scoped changelog. help.awin.com/apidocs/changelog returns 404.
+- No breaking-change notice channel for API consumers.
+- >-
+  Individual apidocs pages do carry `updated:` timestamps in their markdown
+  frontmatter (e.g. Conversion API updated 2026-07-01, Post Offers 2026-07-22),
+  which is the closest thing to per-endpoint change history Awin publishes.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://help.awin.com/docs/release-notes.md
+    http_status: 200
+  - url: https://help.awin.com/apidocs/changelog
+    http_status: 404

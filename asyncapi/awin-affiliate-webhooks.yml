@@ -1,0 +1,139 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/developers/docs/transaction-notifications
+spec_type: none
+docs:
+- https://help.awin.com/developers/docs/transaction-notifications
+- https://help.awin.com/apidocs/transaction-notifications
+description: >-
+  Awin publishes NO AsyncAPI document and no event catalogue, but it does ship a
+  genuine, fully documented webhook surface for publishers - Transaction
+  Notifications. Awin POSTs (or GETs) to a publisher-configured callback URL in
+  near real time each time a transaction is recorded, carrying the full
+  transaction record including commission-group and product-level breakdowns.
+  This is captured here as a webhook catalogue; it was NOT converted into a
+  fabricated AsyncAPI document.
+delivery:
+  direction: provider-to-consumer
+  configured_in: Awin platform UI - Toolbox > Transaction Notifications
+  access_note: >-
+    The Transaction Notifications option is not present for every account; the
+    docs instruct publishers who cannot see it to raise a support ticket to
+    request access. The webhook surface is therefore effectively request-gated.
+  callback_url: publisher-supplied
+  ports: 80 or 443
+  methods:
+  - GET
+  - POST
+  retry_policy: none documented
+  signing: none documented
+  authentication: none documented
+  note: >-
+    No HMAC signature, no shared secret, no timestamp header and no replay
+    protection is documented. A consumer cannot verify that a delivered
+    transaction notification actually came from Awin. There is also no
+    documented retry or delivery guarantee - a failed endpoint appears to lose
+    the notification.
+options:
+- name: Product Data
+  description: >-
+    Include the product-level breakdown of the purchase. Depends on the
+    advertiser having implemented Product Level Tracking AND choosing to share
+    it with publishers, so the field can be legitimately absent.
+- name: Click Source Data
+  description: Include information about the initial click that led to the transaction.
+events:
+- name: transaction.recorded
+  documented_name: Transaction Notification
+  description: >-
+    Fired in near real time when Awin records a transaction for the publisher.
+    Used for real-time alerting, mirroring transactions into external stores, and
+    for cashback publishers to attribute a transaction back to their own user.
+  transports:
+  - method: POST
+    content_type: application/x-www-form-urlencoded; charset=UTF-8
+    body_field: AwinTransactionPush
+    payload_format: JSON string carried in the AwinTransactionPush form field
+    note: >-
+      The payload is JSON but it is NOT sent as application/json - it arrives as
+      a urlencoded form field named AwinTransactionPush that the receiver must
+      read and parse. Consumers wiring a naive JSON body parser will get nothing.
+  - method: GET
+    payload_format: URL query parameters built from macro placeholders
+    note: >-
+      The publisher composes the callback URL themselves using !!!macro!!!
+      placeholders, so the GET payload has no fixed shape - it is whatever the
+      publisher templated.
+  payload_fields:
+  - {name: transactionId, type: string, description: Awin unique transaction id, example: '105956531'}
+  - {name: transactionDate, type: string, format: '%Y-%m-%d %H:%i:%s (UTC)', example: '2013-06-13 12:05:00'}
+  - {name: transactionCurrency, type: string, description: ISO 4217 code of the advertiser programme currency, example: GBP}
+  - {name: transactionAmount, type: string, description: Total sale amount in the programme currency, example: '26.09'}
+  - {name: trackedCurrency, type: string, description: Original purchase currency, present only when it differs from the programme currency}
+  - {name: trackedAmount, type: string, description: Total sale amount in the original purchase currency}
+  - {name: affiliateId, type: string, description: Publisher id, example: '45628'}
+  - {name: merchantId, type: string, description: Advertiser programme id, example: '3661'}
+  - {name: groupId, type: string, description: Creative group id linked to the converting click}
+  - {name: bannerId, type: string, description: Creative id linked to the converting click}
+  - {name: clickRef, type: string, description: Publisher-supplied click reference (clickRef2 through clickRef6 also available as macros)}
+  - {name: clickThroughTime, type: string, format: '%Y-%m-%d %H:%i:%s (UTC)'}
+  - {name: clickTime, type: string, format: '%Y-%m-%d %H:%i:%s (UTC)'}
+  - {name: ip, type: string, description: Click IP address}
+  - {name: commission, type: string, description: Commission awarded for the transaction, example: '1.64'}
+  - {name: url, type: string, description: Referring click URL}
+  - {name: phrase, type: string, description: Search phrase extracted from the click referrer}
+  - {name: searchEngine, type: string, description: Search engine name extracted from the click referrer}
+  - {name: commissionGroups, type: array, description: 'Commission group breakdown - objects of id, name, code, description (and commissionAmount/amount in the GET macro form)'}
+  - {name: products, type: array, description: 'Product breakdown - objects of productName, unitPrice, skuType, skuCode, quantity, category, cgId'}
+  macro_placeholders:
+  - '!!!affiliateId!!!'
+  - '!!!bannerId!!!'
+  - '!!!clickRef!!!'
+  - '!!!clickRef2!!!'
+  - '!!!clickRef3!!!'
+  - '!!!clickRef4!!!'
+  - '!!!clickRef5!!!'
+  - '!!!clickRef6!!!'
+  - '!!!clickThroughTime!!!'
+  - '!!!clickTime!!!'
+  - '!!!commission!!!'
+  - '!!!commissionGroups!!!'
+  - '!!!groupId!!!'
+  - '!!!merchantId!!!'
+  - '!!!phrase!!!'
+  - '!!!products!!!'
+  - '!!!searchEngine!!!'
+  - '!!!trackedAmount!!!'
+  - '!!!trackedCurrency!!!'
+  - '!!!transactionAmount!!!'
+  - '!!!transactionCurrency!!!'
+  - '!!!transactionDate!!!'
+  - '!!!transactionId!!!'
+  - '!!!url!!!'
+  macro_gotcha: >-
+    !!!products!!! and !!!commissionGroups!!! return arrays of name-value pairs
+    and must be the ENTIRE parameter value - prefixing them
+    (myproducts=prefix_!!!products!!!) silently breaks substitution.
+consumer_alternative:
+  name: Zapier
+  url: https://zapier.com/apps/awin/integrations
+  docs: https://help.awin.com/apidocs/transaction-notifications
+  note: >-
+    Awin documents Webhooks-by-Zapier "Catch Hook" / "Catch Raw Hook" as the
+    supported no-code receiver, which is also the only place the payload shape is
+    demonstrated end to end.
+gaps:
+- No AsyncAPI or CloudEvents document published.
+- No signature or shared secret - deliveries are unverifiable.
+- No documented retry, backoff or dead-letter behaviour.
+- Publisher-side only; advertisers have no equivalent outbound event surface.
+- Enabling it may require a support ticket, so it is not self-serve.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://help.awin.com/developers/docs/transaction-notifications.md
+    http_status: 200
+  - url: https://help.awin.com/apidocs/transaction-notifications.md
+    http_status: 200
+  - url: https://help.awin.com/asyncapi.yaml
+    http_status: 404

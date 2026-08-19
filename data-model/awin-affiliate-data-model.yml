@@ -1,0 +1,136 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/awin-affiliate-openapi.yml
+docs:
+- https://help.awin.com/apidocs/resources
+- https://help.awin.com/developers/docs/transaction-notifications
+description: >-
+  Entity-relationship graph for the Awin API, derived from the OpenAPI schemas in
+  this repo and enriched from the published transaction-notification payload and
+  batch-validation reference. The model has two roots - Publisher and Advertiser -
+  and every other entity hangs off the relationship between them. Identity in
+  Awin is unusual and worth calling out: a Transaction can be addressed either by
+  its numeric transactionId OR by the composite key (orderRef, transactionDate,
+  timezone), which makes the timezone field part of the primary identity rather
+  than a formatting concern.
+identifiers:
+  style: numeric
+  prefixes: none
+  note: >-
+    No prefixed object ids (no `tr_`, `adv_` style). Ids are bare integers -
+    publisherId, advertiserId/merchantId, transactionId, bannerId, groupId,
+    commission group id. The same advertiser is called `advertiserId` in REST
+    paths and `merchantId` in webhook payloads, which is a real naming
+    inconsistency a consumer has to map.
+entities:
+- name: Account
+  schema: Account
+  description: A publisher or advertiser account the authenticated user can reach.
+  key: id
+  discriminator: type (publisher | advertiser)
+  source_operation: getAccounts
+- name: Publisher
+  description: >-
+    An affiliate partner - content, cashback, voucher or loyalty. Root of the
+    /publishers/{publisherId}/* surface.
+  key: publisherId
+  aliases: [affiliateId]
+- name: Advertiser
+  description: A brand running a programme. Root of the /advertisers/{advertiserId}/* surface.
+  key: advertiserId
+  aliases: [merchantId]
+- name: Programme
+  schema: ProgrammeInfo
+  description: An advertiser's affiliate programme as seen by a publisher, scoped by relationship.
+  key: id
+  source_operation: getProgrammes
+- name: ProgrammeDetails
+  schema: ProgrammeDetails
+  description: Extended detail record for a single programme.
+  source_operation: getProgrammeDetails
+- name: Transaction
+  schema: Transaction
+  description: A single tracked sale or lead.
+  key: transactionId
+  alternate_key: [orderRef, transactionDate, timezone]
+  source_operation: [getPublisherTransactions, getAdvertiserTransactions]
+- name: CommissionGroup
+  schema: CommissionGroup
+  description: A named commission rate bucket (code, name, description) defined on a programme.
+  key: id
+  business_key: code
+  source_operation: getCommissionGroups
+- name: TransactionPart
+  description: >-
+    The split of a transaction's sale amount across commission groups. Documented
+    on the batch amend operation - the parts must sum to saleAmount or the
+    DEFAULT group is auto-adjusted to balance.
+  parent: Transaction
+- name: Product
+  description: >-
+    Product-level line item on a transaction (productName, unitPrice, skuType,
+    skuCode, quantity, category, cgId). Present only when the advertiser
+    implements Product Level Tracking AND shares it with publishers.
+  parent: Transaction
+- name: PerformanceRow
+  schema: PerformanceRow
+  description: >-
+    An aggregated reporting row. Not a persisted entity - a projection of
+    transactions grouped by advertiser, creative or campaign over a date window.
+  source_operation:
+  - getPublisherAdvertiserReport
+  - getPublisherCreativeReport
+  - getPublisherCampaignReport
+  - getAdvertiserPublisherReport
+  - getAdvertiserCreativeReport
+  - getAdvertiserCampaignReport
+- name: Money
+  schema: Money
+  description: Value object - amount plus ISO 4217 currency. Embedded, never addressed on its own.
+- name: Creative
+  description: >-
+    A banner or link asset. Referenced by transactions and webhook payloads as
+    bannerId with a groupId for its creative group. No REST operation in the
+    documented surface returns it directly.
+  key: bannerId
+- name: Offer
+  description: >-
+    A promotion or voucher. Created by advertisers via POST
+    /promotion/advertiser/{advertiser_id} and retrieved by publishers via the
+    Retrieve Offers surface. Not modelled in this repo's OpenAPI.
+  documented_at: https://help.awin.com/apidocs/offers-api
+relationships:
+- {from: Account, to: Publisher, type: has_one, via: id, note: when type = publisher}
+- {from: Account, to: Advertiser, type: has_one, via: id, note: when type = advertiser}
+- {from: Publisher, to: Transaction, type: has_many, via: publisherId}
+- {from: Advertiser, to: Transaction, type: has_many, via: advertiserId}
+- {from: Publisher, to: Programme, type: has_many, via: publisherId, note: scoped by the relationship parameter (joined, pending, suspended, notjoined)}
+- {from: Advertiser, to: Programme, type: has_one, via: advertiserId}
+- {from: Programme, to: CommissionGroup, type: has_many, via: advertiserId}
+- {from: Transaction, to: CommissionGroup, type: has_many, via: 'commissionGroups[].id'}
+- {from: Transaction, to: TransactionPart, type: has_many, via: 'transactionParts[]'}
+- {from: TransactionPart, to: CommissionGroup, type: belongs_to, via: commissionGroupCode}
+- {from: Transaction, to: Product, type: has_many, via: 'products[]'}
+- {from: Product, to: CommissionGroup, type: belongs_to, via: cgId}
+- {from: Transaction, to: Creative, type: belongs_to, via: bannerId}
+- {from: Transaction, to: Money, type: has_one, via: transactionAmount + transactionCurrency}
+- {from: Transaction, to: Money, type: has_one, via: commission + transactionCurrency}
+- {from: Transaction, to: Publisher, type: belongs_to, via: affiliateId}
+- {from: Transaction, to: Advertiser, type: belongs_to, via: merchantId}
+- {from: PerformanceRow, to: Programme, type: belongs_to, via: advertiserId, note: on advertiser-dimension reports}
+- {from: PerformanceRow, to: Publisher, type: belongs_to, via: publisherId, note: on publisher-dimension reports}
+- {from: Programme, to: Offer, type: has_many, via: advertiser_id}
+currency_model:
+  note: >-
+    A transaction can carry two currencies - transactionCurrency (the advertiser
+    programme's currency, in which commission is paid) and trackedCurrency (the
+    currency the shopper actually paid in), with trackedAmount alongside. The
+    second pair is present only when the two differ. Any consumer summing
+    transactionAmount across programmes without normalising currency is producing
+    a meaningless number.
+custom_parameters:
+  note: >-
+    Advertisers attach up to 127 numerically-keyed custom parameters to a
+    transaction, settable at conversion time and updatable through the batch
+    `amendTrackingParameters` action. Values cannot be deleted or blanked.
+render: null

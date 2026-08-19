@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: live /.well-known/ probes of the Awin website, API and platform hosts
+description: >-
+  Awin serves an RFC 9116 security.txt from three separate hosts - the marketing
+  site (www.awin.com), the API host (api.awin.com) and the platform UI
+  (ui.awin.com). The www and ui documents point at Awin's Intigriti-run private
+  bug bounty; the api.awin.com document instead advertises an OpenBugBounty
+  listing. No OIDC / OAuth discovery documents, no api-catalog and no ai-plugin
+  manifest are served on any host - Awin's API tokens are minted in the platform
+  UI rather than through a discoverable authorization server, which is why
+  /.well-known/openid-configuration and /.well-known/oauth-authorization-server
+  both 404.
+hosts:
+- host: https://www.awin.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: awin-affiliate-security.txt
+    note: RFC 9116. Contact security-bugs@awin.com; policy routes researchers through Intigriti.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.awin.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: >-
+      Served by the API host itself. Differs from the www copy - contact
+      security-bugs@awin.com plus OpenBugBounty https://openbugbounty.org/bugbounty/infosec_jma/
+      instead of the Intigriti policy line. Not saved separately; recorded here
+      as an observed divergence between the two published documents.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://ui.awin.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: >-
+      Policy text only (Intigriti onboarding); no Contact field of its own.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://help.awin.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  note: >-
+    The Document360-hosted docs site answers 404 for every /.well-known/ path. It
+    does, however, serve a real /llms.txt (200) - captured in llms/.
+x-evidence:
+  fetched: '2026-08-13'
+  hits: 3
+  misses: 25

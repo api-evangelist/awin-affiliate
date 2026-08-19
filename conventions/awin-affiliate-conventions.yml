@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: searched
+source: https://help.awin.com/apidocs/introduction-1
+docs:
+- https://help.awin.com/apidocs/introduction-1
+- https://help.awin.com/apidocs/api-authentication
+- https://help.awin.com/apidocs/response-codes
+description: >-
+  Cross-cutting request/response semantics for the Awin API, read from the
+  published documentation and cross-checked against the OpenAPI in this repo.
+  Awin's conventions are thin by modern standards - a single user-level bearer
+  token with no scopes, no idempotency contract, no cursor pagination, no
+  request-id header and no version negotiation. The constraints that DO exist
+  are date-window caps and batch-size caps rather than the usual pagination and
+  concurrency controls.
+authentication:
+  style: bearer
+  header: Authorization
+  format: "Bearer <token>"
+  alternate:
+  - style: api-key
+    header: x-api-key
+    applies_to:
+    - Conversion API / Create Transactions (POST /s2s/advertiser/{advertiser_id}/orders)
+  - style: query-parameter
+    parameter: accessToken
+    note: >-
+      Many GET endpoints also accept the token as an `accessToken` query
+      parameter. This is a real published convention and a real hazard - tokens
+      in query strings leak into logs, referrers and browser history.
+  token_scope: user
+  token_issuance: https://ui.awin.com/awin-api
+  scopes: none
+  note: >-
+    Tokens are minted per USER, not per account or per application, and grant
+    every account that user can reach. There is no OAuth authorization-code
+    flow, no client registration, no refresh token and no scope. Revocation is a
+    single button in the UI that breaks every integration using that token at
+    once. See authentication/awin-affiliate-authentication.yml.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, header or documented retry-safety contract anywhere in
+    the Awin API documentation - searched across the apidocs corpus including the
+    Conversion API and the batch validation endpoint, both of which are POSTs
+    that create or mutate money-bearing records. The Conversion API instead
+    relies on `orderReference` uniqueness per advertiser, which is a business
+    key, not an idempotency key, and the docs never state what happens on a
+    duplicate submission. NO `Idempotency` pointer is wired in apis.yml.
+pagination:
+  style: none
+  note: >-
+    No page, offset, cursor or limit parameters on any documented list endpoint.
+    Result-set size is bounded by a date window instead - transaction listings
+    cap at a 31-day span between startDate and endDate. Callers paginate by
+    walking date ranges.
+  window_parameters:
+  - startDate
+  - endDate
+  - startDateTime
+  - endDateTime
+  - timezone
+  max_window: 31 days (transaction listings)
+batching:
+  supported: true
+  surfaces:
+  - name: Conversion API
+    endpoint: POST https://api.awin.com/s2s/advertiser/{advertiser_id}/orders
+    max_items: 1000
+    unit: orders per batch
+    note: >-
+      Docs recommend batching every 10-60 seconds - not under 10s to stay inside
+      the call limit, and not over 60s or the S2S call loses tracking-method
+      priority. Events take up to 3 minutes to appear in the platform.
+  - name: Batch Transaction Validation
+    endpoint: POST https://api.awin.com/advertisers/{advertiserId}/transactions/batch
+    max_items: 40000
+    unit: transaction objects per request
+  - name: Create Offers
+    endpoint: POST https://api.awin.com/promotion/advertiser/{advertiser_id}
+    max_items: 1
+    unit: offer per request
+    note: >-
+      Explicitly one offer per call; the docs describe "batch" upload as a loop
+      of single calls bounded by a 50 calls/minute limit on this surface.
+field_expansion:
+  supported: false
+  note: >-
+    One boolean toggle exists rather than a general expansion grammar -
+    `showBasketProducts` on the transaction listings. No sparse fieldsets, no
+    `expand` parameter.
+metadata:
+  supported: true
+  note: >-
+    Advertiser-defined custom parameters are carried on transactions as a keyed
+    map (numeric keys up to 127). Settable at conversion time and updatable via
+    the batch `amendTrackingParameters` action. Publishers get clickRef through
+    clickRef6 as free-text passthrough references.
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation-id header documented on request or response.
+versioning:
+  scheme: none
+  note: See lifecycle/awin-affiliate-lifecycle.yml. Unversioned base URL, no version header.
+error_envelope:
+  format: http-status
+  media_type: application/json
+  shape: '{"error": "<token>", "description": "<human text>"}'
+  problem_json: false
+  note: >-
+    Envelope observed live on 2026-08-13; it is not documented. See
+    errors/awin-affiliate-problem-types.yml.
+rate_limit_signaling:
+  documented_limit: 20 requests per minute per user
+  exhaustion_status: 429
+  response_headers: none documented
+  note: >-
+    Awin publishes the number but no runtime signal - no X-RateLimit-*, no
+    RateLimit-*, no Retry-After documented. An agent cannot discover its
+    remaining budget and must model the limit client-side. The Create Offers
+    surface documents a different figure (50 calls/minute), so the platform
+    limit is not uniform. See rate-limits/awin-affiliate-rate-limits.yml.
+transport:
+  https_only: true
+  http_forwarding: not supported
+  content_type: application/json
+  note: >-
+    Docs state plainly that only HTTPS forwarding is supported, not HTTP.
+    Charset-qualified media types (application/json;charset=UTF-8) appear on the
+    batch surfaces.
+date_time:
+  format: "YYYY-MM-DDTHH:MM:SS"
+  timezone_parameter: timezone
+  timezone_reference: https://help.awin.com/apidocs/timezones
+  note: >-
+    Timezone is an explicit request parameter rather than an assumed UTC, and it
+    participates in transaction identity - a transaction can be addressed by
+    (orderRef, transactionDate, timezone) instead of transactionId.
+cross_references:
+  authentication: authentication/awin-affiliate-authentication.yml
+  errors: errors/awin-affiliate-problem-types.yml
+  lifecycle: lifecycle/awin-affiliate-lifecycle.yml
+  rate_limits: rate-limits/awin-affiliate-rate-limits.yml
+  webhooks: asyncapi/awin-affiliate-webhooks.yml

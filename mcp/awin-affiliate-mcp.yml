@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/_original/awin-affiliate-openapi.yml
+description: >-
+  Awin publishes no MCP server. The docs index at help.awin.com/llms.txt names
+  no MCP endpoint, api.awin.com/mcp answers 401 with the same generic
+  unauthorized envelope every unknown path on that host returns (it is not an
+  MCP transport), mcp.awin.com does not resolve, and the npm registry carries
+  only a third-party `affiliate-networks-mcp` package that aggregates several
+  affiliate networks and is not published by Awin. The tools below are a
+  CANDIDATE surface derived one-to-one from the twelve operations in the repo's
+  OpenAPI - nothing here is served by Awin today.
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+  note: >-
+    No hosted endpoint and no stdio package exists. endpoint/install are
+    deliberately empty - inventing either would read as a verified agent surface.
+server:
+  name: awin
+  transport: null
+  url: null
+tools:
+- name: list_accounts
+  description: List the publisher and advertiser accounts the authenticated user can reach.
+  source_operation: openapi/awin-affiliate-accounts-api-openapi.yml#getAccounts
+- name: list_publisher_transactions
+  description: List individual transactions for a publisher over a date range of at most 31 days.
+  source_operation: openapi/awin-affiliate-transactions-api-openapi.yml#getPublisherTransactions
+- name: list_advertiser_transactions
+  description: List individual transactions for an advertiser over a date range of at most 31 days.
+  source_operation: openapi/awin-affiliate-transactions-api-openapi.yml#getAdvertiserTransactions
+- name: get_publisher_advertiser_report
+  description: Aggregated performance for a publisher broken down by advertiser programme.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getPublisherAdvertiserReport
+- name: get_publisher_creative_report
+  description: Aggregated publisher performance broken down by creative.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getPublisherCreativeReport
+- name: get_publisher_campaign_report
+  description: Aggregated publisher performance broken down by campaign.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getPublisherCampaignReport
+- name: get_advertiser_publisher_report
+  description: Aggregated advertiser performance broken down by publisher.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getAdvertiserPublisherReport
+- name: get_advertiser_creative_report
+  description: Aggregated advertiser performance broken down by creative.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getAdvertiserCreativeReport
+- name: get_advertiser_campaign_report
+  description: Aggregated advertiser performance broken down by campaign.
+  source_operation: openapi/awin-affiliate-reports-api-openapi.yml#getAdvertiserCampaignReport
+- name: get_commission_groups
+  description: Read the commission groups and rates published for an advertiser programme.
+  source_operation: openapi/awin-affiliate-commission-groups-api-openapi.yml#getCommissionGroups
+- name: list_programmes
+  description: List advertiser programmes by publisher relationship, optionally filtered by country.
+  source_operation: openapi/awin-affiliate-programmes-api-openapi.yml#getProgrammes
+- name: get_programme_details
+  description: Read the detail record for a single advertiser programme.
+  source_operation: openapi/awin-affiliate-programmes-api-openapi.yml#getProgrammeDetails
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://mcp.awin.com/mcp
+    method: POST tools/list
+    http_status: 0
+    note: host does not resolve
+  - url: https://api.awin.com/mcp
+    method: POST tools/list
+    http_status: 401
+    note: >-
+      Generic {"error":"unauthorized"} envelope - the same body /openapi.json and
+      every other unknown path on api.awin.com returns. Not an MCP transport.
+  - url: https://help.awin.com/mcp
+    method: POST tools/list
+    http_status: 404
