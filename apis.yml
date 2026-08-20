@@ -32,6 +32,15 @@ tags:
 - Advertising
 - Publishers
 - Advertisers
+- Transaction
+- Reporting
+- Commissions
+- Performance Marketing
+tags_raw:
+- Affiliate Marketing
+- Advertising
+- Publishers
+- Advertisers
 - Transactions
 - Reporting
 - Commissions
@@ -46,6 +55,8 @@ apis:
   humanURL: https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user
   baseURL: https://api.awin.com
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -186,6 +197,8 @@ apis:
   humanURL: https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher
   baseURL: https://api.awin.com
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
