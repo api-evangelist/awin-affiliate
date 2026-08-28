@@ -13,6 +13,18 @@ description: Awin is a global affiliate marketing network connecting advertisers
   OAuth 2.0 Bearer access token issued at the user level from the Awin UI (the
   Create Transactions API is the exception and uses an x-api-key). A platform-wide
   throttle limits requests to 20 API calls per minute per user.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
