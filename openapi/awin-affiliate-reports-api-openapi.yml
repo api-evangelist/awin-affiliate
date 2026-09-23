@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Awin Accounts Reports API
-  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  title: Awin Reports API
+  description: Documented public REST API for the Awin global affiliate marketing network.
   termsOfService: https://www.awin.com/gb/legal
   contact:
     name: Awin API Support
@@ -159,6 +159,32 @@ paths:
                   $ref: '#/components/schemas/PerformanceRow'
 components:
   parameters:
+    endDate:
+      name: endDate
+      in: query
+      required: true
+      description: End date, format yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    region:
+      name: region
+      in: query
+      required: true
+      description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
+      schema:
+        type: string
+    dateTypeReport:
+      name: dateType
+      in: query
+      required: false
+      description: Which date to aggregate the report on.
+      schema:
+        type: string
+        enum:
+        - transaction
+        - validation
+        default: transaction
     accessToken:
       name: accessToken
       in: query
@@ -174,6 +200,27 @@ components:
       schema:
         type: string
         default: UTC
+    timezone:
+      name: timezone
+      in: query
+      required: true
+      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
+      schema:
+        type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
     startDate:
       name: startDate
       in: query
@@ -182,53 +229,6 @@ components:
       schema:
         type: string
         format: date
-    advertiserId:
-      name: advertiserId
-      in: path
-      required: true
-      description: The advertiser account identifier.
-      schema:
-        type: integer
-    dateTypeReport:
-      name: dateType
-      in: query
-      required: false
-      description: Which date to aggregate the report on.
-      schema:
-        type: string
-        enum:
-        - transaction
-        - validation
-        default: transaction
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
-    region:
-      name: region
-      in: query
-      required: true
-      description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
-      schema:
-        type: string
-    endDate:
-      name: endDate
-      in: query
-      required: true
-      description: End date, format yyyy-MM-dd.
-      schema:
-        type: string
-        format: date
-    timezone:
-      name: timezone
-      in: query
-      required: true
-      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
-      schema:
-        type: string
   schemas:
     PerformanceRow:
       type: object

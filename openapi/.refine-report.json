@@ -1,11 +1,7 @@
 {
   "provider": "awin-affiliate",
   "sources": [
-    "awin-affiliate-accounts-api-openapi.yml",
-    "awin-affiliate-commission-groups-api-openapi.yml",
-    "awin-affiliate-programmes-api-openapi.yml",
-    "awin-affiliate-reports-api-openapi.yml",
-    "awin-affiliate-transactions-api-openapi.yml"
+    "_original/awin-affiliate-openapi.yml"
   ],
   "outputs": [
     "awin-affiliate-accounts-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "awin-affiliate-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "awin-affiliate-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "awin-affiliate-commission-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "awin-affiliate-programmes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "awin-affiliate-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "awin-affiliate-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

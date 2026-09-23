@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Awin Accounts Transactions API
-  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  title: Awin Transactions API
+  description: Documented public REST API for the Awin global affiliate marketing network.
   termsOfService: https://www.awin.com/gb/legal
   contact:
     name: Awin API Support
@@ -80,20 +80,14 @@ paths:
                   $ref: '#/components/schemas/Transaction'
 components:
   parameters:
-    startDateTime:
-      name: startDate
+    showBasketProducts:
+      name: showBasketProducts
       in: query
-      required: true
-      description: Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      required: false
+      description: Include basket products when product-level tracking is enabled.
       schema:
-        type: string
-    accessToken:
-      name: accessToken
-      in: query
-      required: true
-      description: User-level access token (also accepted as an Authorization Bearer header).
-      schema:
-        type: string
+        type: boolean
+        default: false
     statusTx:
       name: status
       in: query
@@ -106,6 +100,20 @@ components:
         - approved
         - declined
         - deleted
+    endDateTime:
+      name: endDate
+      in: query
+      required: true
+      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
+    startDateTime:
+      name: startDate
+      in: query
+      required: true
+      description: Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
     dateTypeTx:
       name: dateType
       in: query
@@ -118,33 +126,11 @@ components:
         - validation
         - amendment
         default: transaction
-    advertiserId:
-      name: advertiserId
-      in: path
-      required: true
-      description: The advertiser account identifier.
-      schema:
-        type: integer
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
-    showBasketProducts:
-      name: showBasketProducts
-      in: query
-      required: false
-      description: Include basket products when product-level tracking is enabled.
-      schema:
-        type: boolean
-        default: false
-    endDateTime:
-      name: endDate
+    accessToken:
+      name: accessToken
       in: query
       required: true
-      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      description: User-level access token (also accepted as an Authorization Bearer header).
       schema:
         type: string
     timezone:
@@ -154,6 +140,20 @@ components:
       description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
       schema:
         type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
   schemas:
     Money:
       type: object

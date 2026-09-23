@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Awin Accounts Commission Groups API
-  description: Documented public REST API for the Awin global affiliate marketing network. Publishers and advertisers pull individual transactions and aggregated performance reports, read commission groups and programme details, and list the accounts a user can access. All endpoints are served over HTTPS only, return JSON, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI. A platform throttle limits usage to 20 API calls per minute per user. Endpoints and parameters below are grounded in the public Awin API documentation at help.awin.com/apidocs.
+  title: Awin Commission Groups API
+  description: Documented public REST API for the Awin global affiliate marketing network.
   termsOfService: https://www.awin.com/gb/legal
   contact:
     name: Awin API Support
@@ -59,13 +59,6 @@ paths:
                       $ref: '#/components/schemas/CommissionGroup'
 components:
   parameters:
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
     accessToken:
       name: accessToken
       in: query
@@ -73,6 +66,13 @@ components:
       description: User-level access token (also accepted as an Authorization Bearer header).
       schema:
         type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
   schemas:
     CommissionGroup:
       type: object
