@@ -80,33 +80,6 @@ paths:
                   $ref: '#/components/schemas/Transaction'
 components:
   parameters:
-    showBasketProducts:
-      name: showBasketProducts
-      in: query
-      required: false
-      description: Include basket products when product-level tracking is enabled.
-      schema:
-        type: boolean
-        default: false
-    statusTx:
-      name: status
-      in: query
-      required: false
-      description: Filter transactions by status.
-      schema:
-        type: string
-        enum:
-        - pending
-        - approved
-        - declined
-        - deleted
-    endDateTime:
-      name: endDate
-      in: query
-      required: true
-      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
-      schema:
-        type: string
     startDateTime:
       name: startDate
       in: query
@@ -114,6 +87,27 @@ components:
       description: Start of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
       schema:
         type: string
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
+    endDateTime:
+      name: endDate
+      in: query
+      required: true
+      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
     dateTypeTx:
       name: dateType
       in: query
@@ -126,6 +120,26 @@ components:
         - validation
         - amendment
         default: transaction
+    statusTx:
+      name: status
+      in: query
+      required: false
+      description: Filter transactions by status.
+      schema:
+        type: string
+        enum:
+        - pending
+        - approved
+        - declined
+        - deleted
+    showBasketProducts:
+      name: showBasketProducts
+      in: query
+      required: false
+      description: Include basket products when product-level tracking is enabled.
+      schema:
+        type: boolean
+        default: false
     accessToken:
       name: accessToken
       in: query
@@ -140,28 +154,7 @@ components:
       description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
       schema:
         type: string
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
-    advertiserId:
-      name: advertiserId
-      in: path
-      required: true
-      description: The advertiser account identifier.
-      schema:
-        type: integer
   schemas:
-    Money:
-      type: object
-      properties:
-        amount:
-          type: number
-        currency:
-          type: string
     Transaction:
       type: object
       properties:
@@ -234,6 +227,13 @@ components:
           type: array
           items:
             type: object
+    Money:
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
