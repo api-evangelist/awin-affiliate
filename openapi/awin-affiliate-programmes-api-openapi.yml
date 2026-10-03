@@ -128,6 +128,13 @@ components:
                 type: string
                 description: percentage or amount (amount in programme currency).
   parameters:
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
     relationship:
       name: relationship
       in: query
@@ -143,13 +150,6 @@ components:
         - notjoined
         - any
         default: joined
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
     accessToken:
       name: accessToken
       in: query

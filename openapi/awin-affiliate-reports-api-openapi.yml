@@ -159,14 +159,22 @@ paths:
                   $ref: '#/components/schemas/PerformanceRow'
 components:
   parameters:
-    startDate:
-      name: startDate
+    endDate:
+      name: endDate
       in: query
       required: true
-      description: Start date, format yyyy-MM-dd.
+      description: End date, format yyyy-MM-dd.
       schema:
         type: string
         format: date
+    timezoneOptional:
+      name: timezone
+      in: query
+      required: false
+      description: Timezone identifier, defaults to UTC.
+      schema:
+        type: string
+        default: UTC
     timezone:
       name: timezone
       in: query
@@ -185,21 +193,6 @@ components:
         - transaction
         - validation
         default: transaction
-    timezoneOptional:
-      name: timezone
-      in: query
-      required: false
-      description: Timezone identifier, defaults to UTC.
-      schema:
-        type: string
-        default: UTC
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
     region:
       name: region
       in: query
@@ -207,13 +200,13 @@ components:
       description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
       schema:
         type: string
-    accessToken:
-      name: accessToken
-      in: query
+    publisherId:
+      name: publisherId
+      in: path
       required: true
-      description: User-level access token (also accepted as an Authorization Bearer header).
+      description: The publisher account identifier.
       schema:
-        type: string
+        type: integer
     advertiserId:
       name: advertiserId
       in: path
@@ -221,14 +214,21 @@ components:
       description: The advertiser account identifier.
       schema:
         type: integer
-    endDate:
-      name: endDate
+    startDate:
+      name: startDate
       in: query
       required: true
-      description: End date, format yyyy-MM-dd.
+      description: Start date, format yyyy-MM-dd.
       schema:
         type: string
         format: date
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
   schemas:
     PerformanceRow:
       type: object

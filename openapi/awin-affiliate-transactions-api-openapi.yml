@@ -80,6 +80,39 @@ paths:
                   $ref: '#/components/schemas/Transaction'
 components:
   parameters:
+    endDateTime:
+      name: endDate
+      in: query
+      required: true
+      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
+      schema:
+        type: string
+    timezone:
+      name: timezone
+      in: query
+      required: true
+      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
+      schema:
+        type: string
+    dateTypeTx:
+      name: dateType
+      in: query
+      required: false
+      description: Which date to filter transactions on.
+      schema:
+        type: string
+        enum:
+        - transaction
+        - validation
+        - amendment
+        default: transaction
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
     startDateTime:
       name: startDate
       in: query
@@ -94,44 +127,6 @@ components:
       description: The advertiser account identifier.
       schema:
         type: integer
-    endDateTime:
-      name: endDate
-      in: query
-      required: true
-      description: End of range, format yyyy-MM-ddThh:mm:ss. Max 31 days between start and end.
-      schema:
-        type: string
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
-    dateTypeTx:
-      name: dateType
-      in: query
-      required: false
-      description: Which date to filter transactions on.
-      schema:
-        type: string
-        enum:
-        - transaction
-        - validation
-        - amendment
-        default: transaction
-    statusTx:
-      name: status
-      in: query
-      required: false
-      description: Filter transactions by status.
-      schema:
-        type: string
-        enum:
-        - pending
-        - approved
-        - declined
-        - deleted
     showBasketProducts:
       name: showBasketProducts
       in: query
@@ -147,13 +142,18 @@ components:
       description: User-level access token (also accepted as an Authorization Bearer header).
       schema:
         type: string
-    timezone:
-      name: timezone
+    statusTx:
+      name: status
       in: query
-      required: true
-      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
+      required: false
+      description: Filter transactions by status.
       schema:
         type: string
+        enum:
+        - pending
+        - approved
+        - declined
+        - deleted
   schemas:
     Transaction:
       type: object
