@@ -47,14 +47,6 @@ paths:
                     items:
                       $ref: '#/components/schemas/Account'
 components:
-  parameters:
-    accessToken:
-      name: accessToken
-      in: query
-      required: true
-      description: User-level access token (also accepted as an Authorization Bearer header).
-      schema:
-        type: string
   schemas:
     Account:
       type: object
@@ -73,6 +65,14 @@ components:
         userRole:
           type: string
           description: The permission level assigned to the user for this account.
+  parameters:
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

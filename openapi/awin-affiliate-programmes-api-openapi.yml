@@ -67,62 +67,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProgrammeDetails'
 components:
-  parameters:
-    relationship:
-      name: relationship
-      in: query
-      required: false
-      description: Filter by the publisher's relationship to the programme.
-      schema:
-        type: string
-        enum:
-        - joined
-        - pending
-        - suspended
-        - rejected
-        - notjoined
-        - any
-        default: joined
-    accessToken:
-      name: accessToken
-      in: query
-      required: true
-      description: User-level access token (also accepted as an Authorization Bearer header).
-      schema:
-        type: string
-    publisherId:
-      name: publisherId
-      in: path
-      required: true
-      description: The publisher account identifier.
-      schema:
-        type: integer
   schemas:
-    ProgrammeInfo:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        displayUrl:
-          type: string
-        clickThroughUrl:
-          type: string
-        deeplinkEnabled:
-          type: boolean
-        membershipStatus:
-          type: string
-        logoUrl:
-          type: string
-        currencyCode:
-          type: string
-        primaryRegion:
-          type: object
-        validDomains:
-          type: array
-          items:
-            type: string
     ProgrammeDetails:
       type: object
       properties:
@@ -157,6 +102,61 @@ components:
               type:
                 type: string
                 description: percentage or amount (amount in programme currency).
+    ProgrammeInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        displayUrl:
+          type: string
+        clickThroughUrl:
+          type: string
+        deeplinkEnabled:
+          type: boolean
+        membershipStatus:
+          type: string
+        logoUrl:
+          type: string
+        currencyCode:
+          type: string
+        primaryRegion:
+          type: object
+        validDomains:
+          type: array
+          items:
+            type: string
+  parameters:
+    accessToken:
+      name: accessToken
+      in: query
+      required: true
+      description: User-level access token (also accepted as an Authorization Bearer header).
+      schema:
+        type: string
+    publisherId:
+      name: publisherId
+      in: path
+      required: true
+      description: The publisher account identifier.
+      schema:
+        type: integer
+    relationship:
+      name: relationship
+      in: query
+      required: false
+      description: Filter by the publisher's relationship to the programme.
+      schema:
+        type: string
+        enum:
+        - joined
+        - pending
+        - suspended
+        - rejected
+        - notjoined
+        - any
+        default: joined
   securitySchemes:
     bearerAuth:
       type: http

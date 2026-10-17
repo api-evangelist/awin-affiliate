@@ -166,13 +166,6 @@ components:
       description: User-level access token (also accepted as an Authorization Bearer header).
       schema:
         type: string
-    timezone:
-      name: timezone
-      in: query
-      required: true
-      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
-      schema:
-        type: string
     publisherId:
       name: publisherId
       in: path
@@ -180,36 +173,13 @@ components:
       description: The publisher account identifier.
       schema:
         type: integer
-    advertiserId:
-      name: advertiserId
-      in: path
-      required: true
-      description: The advertiser account identifier.
-      schema:
-        type: integer
-    region:
-      name: region
-      in: query
-      required: true
-      description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
-      schema:
-        type: string
-    timezoneOptional:
+    timezone:
       name: timezone
       in: query
-      required: false
-      description: Timezone identifier, defaults to UTC.
-      schema:
-        type: string
-        default: UTC
-    endDate:
-      name: endDate
-      in: query
       required: true
-      description: End date, format yyyy-MM-dd.
+      description: Timezone identifier, e.g. UTC, Europe/London, US/Eastern.
       schema:
         type: string
-        format: date
     dateTypeReport:
       name: dateType
       in: query
@@ -221,6 +191,29 @@ components:
         - transaction
         - validation
         default: transaction
+    endDate:
+      name: endDate
+      in: query
+      required: true
+      description: End date, format yyyy-MM-dd.
+      schema:
+        type: string
+        format: date
+    timezoneOptional:
+      name: timezone
+      in: query
+      required: false
+      description: Timezone identifier, defaults to UTC.
+      schema:
+        type: string
+        default: UTC
+    region:
+      name: region
+      in: query
+      required: true
+      description: Region code. One of AT, AU, BE, BR, BU, CA, CH, DE, DK, ES, FI, FR, GB, IE, IT, NL, NO, PL, SE, US.
+      schema:
+        type: string
     startDate:
       name: startDate
       in: query
@@ -229,6 +222,13 @@ components:
       schema:
         type: string
         format: date
+    advertiserId:
+      name: advertiserId
+      in: path
+      required: true
+      description: The advertiser account identifier.
+      schema:
+        type: integer
   schemas:
     PerformanceRow:
       type: object
