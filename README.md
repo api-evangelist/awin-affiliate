@@ -1,4 +1,4 @@
-# Awin (awin-affiliate)
+# Awin
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,106 +64,162 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Awin is a global affiliate marketing network that connects advertisers (brands) with publishers (content creators, cashback, voucher, loyalty, and price-comparison partners) across thousands of programmes worldwide. Awin exposes a documented public REST API at `https://api.awin.com` that lets both publishers and advertisers pull data such as individual transactions and aggregated performance reports, inspect commission groups and programme details, list the accounts a user can access, and generate tracking links and offers.
+Awin is a global affiliate marketing network connecting advertisers (brands) with publishers (content creators, cashback, voucher, and loyalty partners) across thousands of programmes worldwide. Awin exposes a documented public REST API at https://api.awin.com that lets both publishers and advertisers pull data such as individual transactions and aggregated performance reports, inspect commission groups and programme details, list the accounts a user can access, and generate tracking links and offers. All endpoints follow REST principles, return JSON, are served over HTTPS only, and authenticate with an OAuth 2.0 Bearer access token issued at the user level from the Awin UI (the Create Transactions API is the exception and uses an x-api-key). A platform-wide throttle limits requests to 20 API calls per minute per user.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/awin-affiliate/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/awin-affiliate/refs/heads/main/apis.yml)
+**Areas:** Affiliate Marketing · Advertising · Publishers · Advertisers · Transaction · Reporting · Commissions · Performance Marketing
 
-## Access Model
+## Awin on APIs.io
 
-Awin's API is publicly documented at [help.awin.com/apidocs](https://help.awin.com/apidocs/introduction-1), but calling it requires an Awin account and an access token, so it is not anonymously open.
+Everything profiled for Awin is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/awin-affiliate/](https://apis.io/providers/awin-affiliate/)** — or go straight to one of the APIs or properties below.
 
-- **Publishers** join the Awin network to earn commissions. Publisher signup is generally free to get started (some regions historically applied a small, refundable verification charge). Once approved, a publisher with Admin access can generate an API token.
-- **Advertisers** pay to run programmes on Awin. Awin publishes advertiser plans (for example, Access at $49/month with a 3.5% per-transaction tracking fee, Accelerate from $99/month with 2.5%, and Advanced with custom pricing), plus the partner commission the advertiser itself sets. Advertisers with Admin access can also generate an API token.
-- The **API itself carries no separate metered fee** — it is an access surface over the account you already hold. Cost sits in the network's commercial model (advertiser fees and publisher commissions), not in per-call API charges.
+### APIs (5)
 
-### Authentication
+- [Awin Accounts API](https://apis.io/apis/awin-affiliate/awin-affiliate-accounts-api/) — Accounts the authenticated user can access.
+- [Awin Commission Groups API](https://apis.io/apis/awin-affiliate/awin-affiliate-commission-groups-api/) — Commission groups and rates for a programme.
+- [Awin Programmes API](https://apis.io/apis/awin-affiliate/awin-affiliate-programmes-api/) — Advertiser programmes and their details.
+- [Awin Reports API](https://apis.io/apis/awin-affiliate/awin-affiliate-reports-api/) — Aggregated performance reports.
+- [Awin Transactions API](https://apis.io/apis/awin-affiliate/awin-affiliate-transactions-api/) — Individual publisher and advertiser transactions.
 
-All APIs follow the OAuth 2.0 specification and require an access token passed as a Bearer token:
+### Published properties
 
-```
-Authorization: Bearer <your_token>
-```
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Tokens are set at the **user level**: once created, a token grants access to data from every publisher or advertiser account the user is associated with. Tokens are generated at [ui.awin.com/awin-api](https://ui.awin.com/awin-api) (or the "API Credentials" user-menu item) and can be revoked there. The one exception is the **Create Transactions API**, which authenticates with an API key sent as `x-api-key` instead.
+#### AsyncAPI (1)
 
-Only HTTPS is supported (there is no HTTP-to-HTTPS forwarding), responses default to JSON, and a throttle limits usage to **20 API calls per minute per user**.
+Event-driven and webhook contracts.
 
-## Tags
+- [Awin Affiliate Webhooks](https://apis.io/asyncapis/awin-affiliate/awin-affiliate-webhooks/)
 
-- Affiliate Marketing
-- Advertising
-- Publishers
-- Advertisers
-- Transactions
-- Reporting
-- Commissions
-- Performance Marketing
+#### Agentic access (1)
 
-## Timestamps
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Created:** 2026-07-05
-- **Modified:** 2026-07-05
+- [Awin Affiliate Agentic Access](https://apis.io/agentic-access/awin-affiliate/awin-affiliate-agentic-access/)
 
-## APIs
+#### Collections (6)
 
-### Awin Accounts API
+Postman and Open Collection request collections.
 
-Return the list of Awin accounts the authenticated user can access. Because the access token is set at the user level, `GET /accounts` enumerates every publisher and advertiser account associated with the user, with an optional `type` filter, so integrations can discover account IDs before making per-account requests.
+- [Awin API](https://apis.io/collections/awin-affiliate/open-awin-affiliate/)
+- [Awin Accounts API](https://apis.io/collections/awin-affiliate/open-awin-affiliate-accounts-api/)
+- [Awin Accounts Commission Groups API](https://apis.io/collections/awin-affiliate/open-awin-affiliate-commission-groups-api/)
+- [Awin Accounts Programmes API](https://apis.io/collections/awin-affiliate/open-awin-affiliate-programmes-api/)
+- [Awin Accounts Reports API](https://apis.io/collections/awin-affiliate/open-awin-affiliate-reports-api/)
+- [Awin Accounts Transactions API](https://apis.io/collections/awin-affiliate/open-awin-affiliate-transactions-api/)
 
-- **Human URL:** [https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user](https://help.awin.com/apidocs/returns-information-about-accounts-for-a-given-user)
-- **Base URL:** `https://api.awin.com`
-- `GET /accounts`
+#### Overlays (10)
 
-### Awin Transactions API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-Pull individual transactions (sales, leads, bonuses) for a publisher or advertiser over a date range of up to 31 days, filtered by timezone, date type (transaction, validation, amendment), and status (pending, approved, declined, deleted). Responses include click and order references, custom parameters, commission, conversion lapse time, and optional basket products.
+- [Awin Affiliate Accounts Api Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-accounts-api-overlay/)
+- [Awin Affiliate Accounts Api Phrasing Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-accounts-api-phrasing-overlay/)
+- [Awin Affiliate Commission Groups Api Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-commission-groups-api-overlay/)
+- [Awin Affiliate Commission Groups Api Phrasing Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-commission-groups-api-phrasing-overlay/)
+- [Awin Affiliate Programmes Api Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-programmes-api-overlay/)
+- [Awin Affiliate Programmes Api Phrasing Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-programmes-api-phrasing-overlay/)
+- [Awin Affiliate Reports Api Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-reports-api-overlay/)
+- [Awin Affiliate Reports Api Phrasing Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-reports-api-phrasing-overlay/)
+- [Awin Affiliate Transactions Api Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-transactions-api-overlay/)
+- [Awin Affiliate Transactions Api Phrasing Overlay](https://apis.io/overlays/awin-affiliate/awin-affiliate-transactions-api-phrasing-overlay/)
 
-- **Human URL:** [https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher](https://help.awin.com/apidocs/returns-a-list-of-transactions-for-a-given-publisher)
-- **Base URL:** `https://api.awin.com`
-- `GET /publishers/{publisherId}/transactions/`
-- `GET /advertisers/{advertiserId}/transactions/`
+#### Security (4)
 
-### Awin Reports API
+Authentication, trust centre, and vulnerability disclosure.
 
-Retrieve aggregated performance reports over a date range. Publishers aggregate by advertiser, creative, or campaign; advertisers aggregate by publisher, creative, or campaign. Each report breaks impressions, clicks, and transaction counts, values, and commission down by status (pending, confirmed, bonus, declined) with totals, region, and currency.
+- [Awin Affiliate Authentication](https://apis.io/security/awin-affiliate/awin-affiliate-authentication/)
+- [Awin Affiliate Domain Security](https://apis.io/security/awin-affiliate/awin-affiliate-domain-security/)
+- [Awin Affiliate Trust Center](https://apis.io/security/awin-affiliate/awin-affiliate-trust-center/)
+- [Awin Affiliate Vulnerability Disclosure](https://apis.io/security/awin-affiliate/awin-affiliate-vulnerability-disclosure/)
 
-- **Human URL:** [https://help.awin.com/apidocs/get-advertiser-performance-report](https://help.awin.com/apidocs/get-advertiser-performance-report)
-- **Base URL:** `https://api.awin.com`
-- `GET /publishers/{publisherId}/reports/advertiser`
-- `GET /publishers/{publisherId}/reports/creative`
-- `GET /publishers/{publisherId}/reports/campaign`
-- `GET /advertisers/{advertiserId}/reports/publisher`
-- `GET /advertisers/{advertiserId}/reports/creative`
-- `GET /advertisers/{advertiserId}/reports/campaign`
+#### Plans and pricing (1)
 
-### Awin Commission Groups API
+Published plans, tiers and prices.
 
-Request all commission groups of a programme along with the commission values a publisher earns. Returns each group's id, name, code, type (fix or percentage), amount or percentage, currency, effective rate window, and any applicable conditions, with an optional `effectiveDate` for historical rates.
+- [Awin Affiliate Plans Pricing](https://apis.io/plans/awin-affiliate/awin-affiliate-plans-pricing/)
 
-- **Human URL:** [https://help.awin.com/apidocs/gets-an-array-of-commission-groups-for-an-advertiser](https://help.awin.com/apidocs/gets-an-array-of-commission-groups-for-an-advertiser)
-- **Base URL:** `https://api.awin.com`
-- `GET /publishers/{publisherId}/commissiongroups`
+#### Rate limits (1)
 
-### Awin Programmes API
+Published request limits.
 
-Discover the advertiser programmes a publisher works with and their details. List programmes filtered by relationship (joined, pending, suspended, rejected, notjoined, any) and optionally by country, then pull per-programme detail including description, membership status, valid domains, KPIs (EPC, conversion rate, approval percentage, average payment time, Awin index) and the commission range across commission groups.
+- [Awin Affiliate Rate Limits](https://apis.io/rate-limits/awin-affiliate/awin-affiliate-rate-limits/)
 
-- **Human URL:** [https://help.awin.com/apidocs/get-program-information-details-for-publisher](https://help.awin.com/apidocs/get-program-information-details-for-publisher)
-- **Base URL:** `https://api.awin.com`
-- `GET /publishers/{publisherId}/programmes`
-- `GET /publishers/{publisherId}/programmedetails`
+#### FinOps (1)
 
-## Common Properties
+What the API costs to run, by operation.
 
-- [LinkedIn](https://www.linkedin.com/company/awin)
+- [Awin Affiliate Finops](https://apis.io/finops/awin-affiliate/awin-affiliate-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.awin.com)
 - [Documentation](https://help.awin.com/apidocs/introduction-1)
-- [Authentication](https://help.awin.com/apidocs/api-authentication)
-- [Plans](plans/awin-affiliate-plans-pricing.yml)
-- [Rate Limits](rate-limits/awin-affiliate-rate-limits.yml)
-- [Fin Ops](finops/awin-affiliate-finops.yml)
+- [Getting started](https://help.awin.com/apidocs/getting-started-1)
+- [API reference](https://help.awin.com/apidocs)
+- [Pricing](https://www.awin.com/gb/pricing/advertisers)
+- [Sign up](https://www.awin.com/gb/getting-started)
+- [Support](https://success.awin.com/s/contactsupport)
+- [Changelog](https://www.awin.com/gb/product-releases)
+- [Blog](https://www.awin.com/gb/market-insights)
+- [Security](https://www.awin.com/.well-known/security.txt)
+- [Compliance](https://www.awin.com/gb/legal/information-security)
+- [Terms of service](https://www.awin.com/gb/publisher-terms)
+- [Privacy policy](https://www.awin.com/gb/privacy)
+- [GitHub](https://github.com/awin)
+- [Status](https://status.awin.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 68.5** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 55.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 78.9 |
+| Developer ergonomics | 67.3 |
+| Access clarity | 92.1 |
+
+**Agent readiness 32.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/awin-affiliate/](https://apis.io/providers/awin-affiliate/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Awin: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/awin-affiliate/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
